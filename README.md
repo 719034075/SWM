@@ -20,7 +20,7 @@ if you want to create mysql datebase automatically,please modify `./config/my.cn
 
 ## 2017-10-30
 
-+ add the following lines to modify datebase's tables' names
++ add the following lines to modify the names of datebase's tables
 
  ```
  class models_name:
