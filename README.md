@@ -17,3 +17,15 @@ if you want to create mysql datebase automatically,please modify `./config/my.cn
 
 > python manage.py migrate
 ```
+
+## 2017-10-30
+
++ add the following lines to modify datebase's tables' names
+
+ ```
+ class models_name:
+    ...
+
+    class Meta:
+        db_table = 'table_name'
+ ```
