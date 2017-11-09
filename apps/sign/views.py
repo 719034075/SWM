@@ -10,3 +10,5 @@ def sign_up(request):
     # views about sign up
     pass
 
+def index(request):
+    return render(request,'index.html')

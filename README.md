@@ -1,15 +1,19 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-11-09 
+
++ look for the static files outside my apps successfully.
+
 ## 2017-11-08
 
-+ reference the layui lib to speed up the development of the font-end
++ reference the layui lib to speed up the development of the font-end.
 
 location is **./static/lib/layui**
 
 ## 2017-10-30
 
-+ add the following lines to modify the names of datebase's tables
++ add the following lines to modify the names of datebase's tables.
 
  ```python
  class models_name:
