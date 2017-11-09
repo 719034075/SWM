@@ -4,7 +4,7 @@ a django web about school washing machine.
 ## 2017-11-09 
 
 + look for the static files outside my apps successfully.
-+ deploy front-end app successfully.
++ deploy front-end app successfully. 
 ## 2017-11-08
 
 + reference the layui lib to speed up the development of the font-end.
