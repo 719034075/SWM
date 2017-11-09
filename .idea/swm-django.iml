@@ -11,7 +11,12 @@
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/font-end/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/font-end/node_moduless" />
+      <excludeFolder url="file://$MODULE_DIR$/front-end/node_moduless" />
+    </content>
+    <content url="file://$MODULE_DIR$/font-end/node_modules" />
     <orderEntry type="jdk" jdkName="Python 3.6.0 virtualenv at F:\Python\pythoh-venv\swm" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
