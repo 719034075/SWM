@@ -1,9 +1,23 @@
 # SWM
 a django web about school washing machine.
 
-## 2017-10-28
+## 2017-11-08
 
-+ completing the connection between the project and the mysql database.
++ reference the layui lib to speed up the development of the font-end
+
+location is **./static/lib/layui**
+
+## 2017-10-30
+
++ add the following lines to modify the names of datebase's tables
+
+ ```python
+ class models_name:
+    ...
+
+    class Meta:
+        db_table = 'table_name'
+ ```
 
 ## 2017-10-29
 
@@ -12,20 +26,12 @@ a django web about school washing machine.
 
 if you want to create mysql datebase automatically,please modify `./config/my.cnf` and execute lines following.
 
+```commandline
+python manage.py makemigrations
+
+python manage.py migrate
 ```
->python manage.py makemigrations
 
-> python manage.py migrate
-```
+## 2017-10-28
 
-## 2017-10-30
-
-+ add the following lines to modify the names of datebase's tables
-
- ```
- class models_name:
-    ...
-
-    class Meta:
-        db_table = 'table_name'
- ```
++ completing the connection between the project and the mysql database.
