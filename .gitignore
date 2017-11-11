@@ -1,3 +1,6 @@
 /.idea
 /front-end/node_moduless
 /front-end/node_modules
+apps/sign/__pycache__/
+apps/sign/migrations/__pycache__/
+swm/__pycache__/

@@ -11,4 +11,4 @@ def sign_up(request):
     pass
 
 def index(request):
-    return render(request, 'base.html')
+    return render(request, 'index.html')
