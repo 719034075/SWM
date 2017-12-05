@@ -5,7 +5,7 @@
     {% if form.errors %}
         <p>您的账号或者密码不正确，请尝试重新登录。</p>
     {% else %}
-        <p>请使用下面的表单进行登录:</p>
+        <p>Please, use the following form to log-in. If you don't have an account <a href="{% url "register" %}">register here</a></p>
     {% endif %}
     <div class="login-form">
         <form action="{% url 'login' %}" method="post">

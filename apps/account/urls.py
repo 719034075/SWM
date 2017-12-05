@@ -1,5 +1,5 @@
 #!usr/bin/python
-#-*- coding:utf-8 _*-
+# -*- coding:utf-8 _*-
 from django.conf.urls import url
 from django.contrib.auth.views import login, logout, logout_then_login, password_change, password_change_done, \
     password_reset, password_reset_done, password_reset_confirm, password_reset_complete
@@ -31,6 +31,12 @@ urlpatterns = [
     url(r'^password-reset/complete/$',
         password_reset_complete,
         name='password_reset_complete'),
+
+    # register
+    url(r'^register/$', views.register, name='register'),
+
+    # edit
+    url(r'^edit/$', views.edit, name='edit'),
 
     # dashboard
     url(r'^$', views.dashboard, name='dashboard'),
