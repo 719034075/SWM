@@ -27,10 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
-BUILT_IN_APPS= [
+BUILT_IN_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +38,12 @@ BUILT_IN_APPS= [
     'django.contrib.staticfiles',
 ]
 
-CUSTOM_APPS=['apps.sign']
+EXTERNAL_APPS = [
+    'apps.sign',
+    'apps.account',
+]
 
-INSTALLED_APPS =BUILT_IN_APPS+CUSTOM_APPS
+INSTALLED_APPS = BUILT_IN_APPS + EXTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,7 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'swm.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -123,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -137,7 +137,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
