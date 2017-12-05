@@ -31,4 +31,7 @@ urlpatterns = [
     url(r'^password-reset/complete/$',
         password_reset_complete,
         name='password_reset_complete'),
+
+    # dashboard
+    url(r'^$', views.dashboard, name='dashboard'),
 ]

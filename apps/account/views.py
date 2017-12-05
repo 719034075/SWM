@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -12,9 +13,9 @@ def user_login(request):
     2. 当user_login被一个POST请求（request）提交表单（form）时，我们执行以下操作：
         i.   通过使用form = LoginForm(request.POST)使用提交的数据实例化表单（form）
         ii.  检查这个表单是否有效。如果无效，我们在模版（template）中展示表单错误信息（举个例子，比如用户没有填写其中一个字段就进行提交）
-        iii. 如果提交的数据是有效的，我们使用authenticate()方法通过数据库对这个用户进行认证（authentication）。这个方法带入一个username和一个
+        iii. 如果提交的数据是有效的，我们使用authenticate()方法通过数据库对这个用户进行认证（registration）。这个方法带入一个username和一个
              password,如果这个用户成功地进行了认证则返回一个用户对象，否则是None。如果用户没用被认证通过，我们返回一个HttpResponse展示一条信息。
-        iv.  如果这个用户认证（authentication）成功，我们使用is_active属性来检查用户是否可用。这是一个Django的User模型（model)属性。
+        iv.  如果这个用户认证（registration）成功，我们使用is_active属性来检查用户是否可用。这是一个Django的User模型（model)属性。
              如果这个用户不可用，我们返回一个HttpResponse展示信息。
         v.   如果用户可用，我们登录这个用户到网站中。我们通过调用login()方法集合用户到会话（session）中然后返回一条成功消息。
     :param request:
@@ -37,3 +38,10 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'account/login.html', {'form': form})
+
+
+@login_required
+def dashboard(request):
+    return render(request,
+                  'account/dashboard.html',
+                  {'section': 'dashboard'})
