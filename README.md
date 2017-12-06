@@ -1,6 +1,11 @@
 # SWM
 a django web about school washing machine.
 
+# 2017-12-06
+
++ register
++ edit the base information
+
 ## 2017-12-05
 
 + login and logout

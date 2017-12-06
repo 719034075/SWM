@@ -7,8 +7,6 @@ from django.contrib.auth.views import login, logout, logout_then_login, password
 from apps.account import views
 
 urlpatterns = [
-    # post views
-    # url(r'^login/$', views.user_login, name='login'),
 
     # login logout
     url(r'^login/$', login, name='login'),

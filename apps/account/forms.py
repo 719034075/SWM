@@ -6,14 +6,6 @@ from django.contrib.auth.models import User
 from apps.account.models import Profile
 
 
-class LoginForm(forms.Form):
-    """
-    this is a login form.
-    """
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password',
                                widget=forms.PasswordInput)
@@ -22,7 +14,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -30,12 +22,21 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
 
+
+class ProfileRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('role',)
+
+
+
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
+
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('date_of_birth', 'photo')
+        fields = ('role', 'avatar')
