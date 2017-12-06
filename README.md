@@ -5,6 +5,7 @@ a django web about school washing machine.
 
 + register
 + edit the base information
++ edit the student information
 
 ## 2017-12-05
 

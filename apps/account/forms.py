@@ -29,7 +29,6 @@ class ProfileRegistrationForm(forms.ModelForm):
         fields = ('role',)
 
 
-
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
