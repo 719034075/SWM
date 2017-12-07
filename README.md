@@ -1,6 +1,10 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-07
+
++ layer v=2.2.4
+
 # 2017-12-06
 
 + register
