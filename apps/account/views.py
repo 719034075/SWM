@@ -12,8 +12,7 @@ from apps.student.models import StudentInformation
 @login_required
 def dashboard(request):
     return render(request,
-                  'account/dashboard.html',
-                  {'section': 'dashboard'})
+                  'account/dashboard.html')
 
 
 def register(request):

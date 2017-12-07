@@ -1,19 +1,23 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Log-in{% endblock %}
 {% block content %}
-    <h1>Log-in</h1>
-    {% if form.errors %}
-        <p>您的账号或者密码不正确，请尝试重新登录。</p>
-    {% else %}
-        <p>Please, use the following form to log-in. If you don't have an account <a href="{% url "register" %}">register here</a></p>
-    {% endif %}
-    <div class="login-form">
-        <form action="{% url 'login' %}" method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}"/>
-            <p><input type="submit" value="Log-in"></p>
-        </form>
-        <p><a href="{% url "password_reset" %}">Forgotten your password?</a></p>
+    <div id="large-header" class="large-header" style="background-image:url({% static 'images/background.jpg' %});">
     </div>
+
+{#    {% if form.errors %}#}
+{#        <p>您的账号或者密码不正确，请尝试重新登录。</p>#}
+{#    {% else %}#}
+{#        <p>Please, use the following form to log-in. If you don't have an account <a href="{% url "register" %}">register#}
+{#            here</a></p>#}
+{#    {% endif %}#}
+{#    <div class="login-form">#}
+{#        <form action="{% url 'login' %}" method="post">#}
+{#            {{ form.as_p }}#}
+{#            {% csrf_token %}#}
+{#            <input type="hidden" name="next" value="{{ next }}"/>#}
+{#            <p><input type="submit" value="Log-in"></p>#}
+{#        </form>#}
+{#        <p><a href="{% url "password_reset" %}">Forgotten your password?</a></p>#}
+{#    </div>#}
 {% endblock %}

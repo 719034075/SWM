@@ -19,6 +19,9 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "clone": "^2.1.1",
+    "cloneable-readable": "^1.0.0",
+    "end-of-stream": "^1.4.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-babel": "^7.0.0",
@@ -31,7 +34,13 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "orchestrator": "^0.3.8",
     "require-dir": "^0.3.2",
-    "streamqueue": "^1.1.1"
+    "sequencify": "^0.0.7",
+    "stream-consume": "^0.1.0",
+    "streamqueue": "^1.1.1",
+    "vinyl": "^2.1.0",
+    "wrappy": "^1.0.2"
   }
 }

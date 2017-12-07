@@ -4,6 +4,8 @@ a django web about school washing machine.
 ## 2017-12-07
 
 + layer v=2.2.4
++ base.html
++ login.html--background
 
 # 2017-12-06
 
