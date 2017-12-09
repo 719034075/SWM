@@ -32,8 +32,8 @@ def register(request):
                                              role=request.POST.get('role'))
             student_information = StudentInformation.objects.create(user=new_user)
             return render(request,
-                          'account/register_done.html',
-                          {'new_user': new_user})
+                          'registration/login.html',
+                          {'message': "注册成功，请登录!"})
     else:
         user_form = UserRegistrationForm()
         profile_form = ProfileRegistrationForm()

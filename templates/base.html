@@ -11,7 +11,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div id="header" class="layui-header">
-        <div class="layui-logo"><img src="{% static 'images/white-logo.png'%}" width="55%" height="55%"></div>
+        <div class="layui-logo"><img src="{% static 'images/white-logo.png' %}" width="55%" height="55%"></div>
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="{% url "dashboard" %}">首页</a></li>
         </ul>
@@ -41,14 +41,11 @@
             &copy;爱沃森 关于我们 加入我们 问题回馈 联系方式 合作伙伴 服务条款 广告业务 版权声明 最新动态
         </div>
     </div>
+    <script src="{% static 'lib/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'lib/axios.min.js' %}"></script>
     <script src="{% static 'lib/layui/layui.js' %}"></script>
-    <script>
-        //JavaScript代码区域
-        layui.use(['element','form'], function () {
-            var element = layui.element,
-                form = layui.form;
-
-        });
-    </script>
+    <script src="{% static 'js/base.js' %}"></script>
+    {% block templates_script %}
+    {% endblock %}
 </body>
 </html>

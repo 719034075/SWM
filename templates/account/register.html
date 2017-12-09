@@ -5,62 +5,69 @@
     <div id="large-header" class="large-header"
          style="background-image:url({% static 'images/background.jpg' %});"></div>
     <div class="login-form account-box register-box">
-        <form class="layui-form layui-form-pane" action="." method="post">
-            <div class="layui-form-item">
-                <img src="{% static 'images/black-logo.png' %}" width="98%" height="98%">
+    <form class="layui-form layui-form-pane" action="." method="post">
+        <div class="layui-form-item">
+            <img src="{% static 'images/black-logo.png' %}" width="98%" height="98%">
+        </div>
+        {% if user_form.errors %}
+            {% for error_key,error_value in user_form.errors.items %}
+                <div style="color: red;font-size: 16px">{{ error_value }}</div>
+            {% endfor %}
+        {% endif %}
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="username" maxlength="150" required="" id="id_username">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">账号：</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="username" maxlength="150" required="" id="id_username">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="first_name" maxlength="30" id="id_first_name">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">姓：</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="first_name" maxlength="30" id="id_first_name">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="last_name" maxlength="30" id="id_last_name">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">名：</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="last_name" maxlength="30" id="id_last_name">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱：</label>
+            <div class="layui-input-inline">
+                <input type="email" class="layui-input" name="email" maxlength="254" id="id_email">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">邮箱：</label>
-                <div class="layui-input-inline">
-                    <input type="email" class="layui-input" name="email" maxlength="254" id="id_email">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-inline">
+                <input type="password" class="layui-input" name="password" required="" id="id_password">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码：</label>
-                <div class="layui-input-inline">
-                    <input type="password" class="layui-input" name="password" required="" id="id_password">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码：</label>
+            <div class="layui-input-inline">
+                <input type="password" class="layui-input" name="password2" required="" id="id_password2">
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">确认密码：</label>
-                <div class="layui-input-inline">
-                    <input type="password" class="layui-input" name="password2" required="" id="id_password2">
-                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户类型：</label>
+            <div class="layui-input-inline">
+                <select name="role" required="" id="id_role">
+                    <option value="">-----</option>
+                    <option value="U">User</option>
+                    <option value="R">Repair</option>
+                </select>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">用户类型：</label>
-                <div class="layui-input-inline">
-                    <select name="role" required="" id="id_role">
-                        <option value="">-----</option>
-                        <option value="U">User</option>
-                        <option value="R">Repair</option>
-                    </select>
-                </div>
-            </div>
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}"/>
-            <div class="layui-form-item">
-                <a name="register" href="{% url "login" %}" class="layui-btn btn-reset layui-btn-danger">返回</a>
-                <button type="submit" class="layui-btn btn-submit">注冊</button>
-            </div>
-        </form>
-    </div>
+        </div>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}"/>
+        <div class="layui-form-item">
+            <a name="register" href="{% url "login" %}" class="layui-btn btn-reset layui-btn-danger">返回</a>
+            <button type="submit" class="layui-btn btn-submit">注冊</button>
+        </div>
+    </form>
+{% endblock %}
+{% block templates_script %}
+    <script src="{% static 'js/account/register.js' %}"></script>
 {% endblock %}

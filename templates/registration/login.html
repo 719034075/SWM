@@ -33,5 +33,11 @@
             <span style="color: red">您的账号或者密码不正确。</span>
             <a href="{% url "password_reset" %}">忘记密码？</a>
         {% endif %}
+        {% if message %}
+            <span style="color: red">{{ message }}</span>
+        {% endif %}
     </div>
+{% endblock %}
+{% block templates_script %}
+    <script src="{% static 'js/registration/login.js' %}"></script>
 {% endblock %}
