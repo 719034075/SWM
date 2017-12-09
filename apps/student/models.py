@@ -6,8 +6,8 @@ from django.db import models
 
 class StudentInformation(models.Model):
     GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female')
+        ('M', '男'),
+        ('F', '女')
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL)

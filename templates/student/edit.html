@@ -1,13 +1,58 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Edit your account{% endblock %}
 {% block content %}
-    <h1>Edit your account</h1>
-    <p>You can edit your account using the following form:</p>
-    <form action="." method="post" enctype="multipart/form-data">
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        {{ student_information_form.as_p }}
-        {% csrf_token %}
-        <p><input type="submit" value="Save changes"></p>
-    </form>
+    <div class="login-form account-box register-box">
+        <form class="layui-form layui-form-pane" action="." method="post">
+            <div class="layui-form-item">
+                <img src="{% static 'images/black-logo.png' %}" width="98%" height="98%">
+            </div>
+            {% if user_form.errors %}
+                {% for error_key,error_value in user_form.errors.items %}
+                    <div style="color: red;font-size: 16px">{{ error_value }}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓：</label>
+                <div class="layui-input-inline">
+                    {{ user_form.first_name }}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">名：</label>
+                <div class="layui-input-inline">
+                    {{ user_form.last_name }}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱：</label>
+                <div class="layui-input-inline">
+                    {{ user_form.email }}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别：</label>
+                <div class="layui-input-inline">
+                    {{ student_information_form.gender }}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号码：</label>
+                <div class="layui-input-inline">
+                    {{ student_information_form.mobile_phone }}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">寝室楼号：</label>
+                <div class="layui-input-inline">
+                    {{ student_information_form.dormitory_building_number }}
+                </div>
+            </div>
+            {% csrf_token %}
+            <div class="layui-form-item">
+                <a name="register" href="{% url "dashboard" %}" class="layui-btn btn-reset layui-btn-danger">返回</a>
+                <button type="submit" class="layui-btn btn-submit">保存修改</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

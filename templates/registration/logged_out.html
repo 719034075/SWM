@@ -1,6 +1,41 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Logged out{% endblock %}
 {% block content %}
-  <h1>Logged out</h1>
-  <p>You have been successfully logged out. You can <a href="{% url "login" %}">log-in again</a>.</p>
+    <div class="login-form account-box login-box">
+        <form class="layui-form layui-form-pane" action="{% url 'login' %}" method="post">
+            <div class="layui-form-item">
+                <img src="{% static 'images/black-logo.png' %}" width="98%" height="98%">
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="username" autofocus="" maxlength="254" required=""
+                           id="id_username">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码：</label>
+                <div class="layui-input-inline">
+                    <input type="password" class="layui-input" name="password" required="" id="id_password">
+                </div>
+            </div>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <div class="layui-form-item">
+                <a name="register" href="{% url "register" %}" class="layui-btn btn-reset layui-btn-danger">注册</a>
+                <button type="submit" class="layui-btn btn-submit">立即登录</button>
+            </div>
+        </form>
+        {% if form.errors %}
+            <span style="color: red">您的账号或者密码不正确。</span>
+            <a href="{% url "password_reset" %}">忘记密码？</a>
+        {% endif %}
+        {% if message %}
+            <span style="color: red">{{ message }}</span>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block templates_script %}
+    <script src="{% static 'js/registration/login.js' %}"></script>
 {% endblock %}

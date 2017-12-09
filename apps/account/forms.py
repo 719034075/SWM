@@ -30,6 +30,10 @@ class ProfileRegistrationForm(forms.ModelForm):
 
 
 class UserEditForm(forms.ModelForm):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'layui-input'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'layui-input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'layui-input'}))
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
