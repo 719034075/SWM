@@ -1,6 +1,11 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-09
+
++ delete user-avatar
++ use javascript less
+
 ## 2017-12-07
 
 + layer v=2.2.4

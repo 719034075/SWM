@@ -5,7 +5,7 @@ from apps.account.models import Profile
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'role', 'avatar']
+    list_display = ['user', 'role']
 
 
 admin.site.register(Profile, ProfileAdmin)

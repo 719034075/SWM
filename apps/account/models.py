@@ -14,7 +14,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     role = models.CharField('用户类型', max_length=1, choices=ROLE_CHOICES)
-    avatar = models.ImageField('头像', upload_to='users/%Y/%m/%d', blank=True)
+    # avatar = models.ImageField('头像', upload_to='users/%Y/%m/%d', blank=True)
 
     class Meta:
         db_table = 'user'
