@@ -10,6 +10,7 @@ from apps.account.views import user_login, user_logout
 urlpatterns = [
 
     # login logout
+    url(r'^$', user_login, name='login'),
     url(r'^login/$', user_login, name='login'),
     url(r'^logout/$', user_logout, name='logout'),
     url(r'^logout-then-login/$', logout_then_login, name='logout_then_login'),
@@ -35,5 +36,5 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
 
     # dashboard
-    url(r'^$', views.dashboard, name='dashboard'),
+    # url(r'^$', views.dashboard, name='dashboard'),
 ]

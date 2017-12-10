@@ -20,6 +20,10 @@ class StudentInformation(models.Model):
 
     class Meta:
         db_table = 'student_information'
+        permissions = (
+            ("view_student_dashboard", "Can view the  student dashboard"),
+            ("edit_student_information", "Can edit the student information")
+        )
 
     def __str__(self):
         return 'Student information for user {}'.format(self.user.username)

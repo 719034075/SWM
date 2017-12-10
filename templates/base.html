@@ -13,7 +13,16 @@
     <div id="header" class="layui-header">
         <div class="layui-logo"><img src="{% static 'images/white-logo.png' %}" width="55%" height="55%"></div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="{% url "dashboard" %}">首页</a></li>
+            {% if perms.student %}
+                {% if perms.student.view_student_dashboard %}
+                    <li class="layui-nav-item"><a href="{% url "view_student_dashboard" %}">首页</a></li>
+                {% endif %}
+            {% endif %}
+            {% if perms.repair %}
+                {% if perms.repair.view_repair_dashboard %}
+                    <li class="layui-nav-item"><a href="{% url "view_repair_dashboard" %}">首页</a></li>
+                {% endif %}
+            {% endif %}
         </ul>
         <ul class="layui-nav layui-layout-right">
             {% if request.user.is_authenticated %}
@@ -22,7 +31,16 @@
                         {{ request.user.first_name }}{{ request.user.last_name }}
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="{% url "edit" %}">基本资料</a></dd>
+                        {% if perms.student %}
+                            {% if perms.student.edit_student_information %}
+                                <dd><a href="{% url "edit_student_information" %}">基本资料</a></dd>
+                            {% endif %}
+                        {% endif %}
+                        {% if perms.repair %}
+                            {% if perms.repair.edit_repair_information %}
+                                <dd><a href="{% url "edit_repair_information" %}">基本资料</a></dd>
+                            {% endif %}
+                        {% endif %}
                         <dd><a href="{% url "password_change" %}">安全设置</a></dd>
                     </dl>
                 </li>
@@ -33,8 +51,8 @@
         </ul>
     </div>
     <div id="content" class="layui-body">
-      <div id="large-header" class="large-header"
-         style="background-image:url({% static 'images/background.jpg' %});"></div>
+        <div id="large-header" class="large-header"
+             style="background-image:url({% static 'images/background.jpg' %});"></div>
         {% block content %}
         {% endblock %}
     </div>

@@ -1,11 +1,19 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 
 # Create your views here.
-from apps.account.forms import UserEditForm, ProfileEditForm
+from apps.account.forms import UserEditForm
 from apps.student.forms import StudentInformationEditForm
 
 
+@permission_required('student.view_student_dashboard')
+@login_required
+def view_student_dashboard(request):
+    return render(request,
+                  'student/dashboard.html')
+
+
+@permission_required('student.edit_student_information')
 @login_required
 def edit_student_information(request):
     if request.method == 'POST':
@@ -19,6 +27,7 @@ def edit_student_information(request):
             return render(request,
                           'account/dashboard.html')
     else:
+        print(dir(request.user))
         user_form = UserEditForm(instance=request.user)
         student_information_form = StudentInformationEditForm(instance=request.user.studentinformation)
 

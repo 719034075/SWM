@@ -23,6 +23,8 @@ urlpatterns = [
     # url(r'^account/', include('apps.account.urls')),
     url(r'^', include('apps.account.urls')),
     url(r'^student/', include('apps.student.urls')),
+    url(r'^repair/', include('apps.repair.urls')),
+
 ]
 
 if settings.DEBUG:

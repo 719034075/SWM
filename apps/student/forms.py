@@ -12,4 +12,4 @@ class StudentInformationEditForm(forms.ModelForm):
 
     class Meta:
         model = StudentInformation
-        exclude = ['user','balance', 'credit', 'integral']
+        exclude = ['user', 'balance', 'credit', 'integral']

@@ -1,20 +1,19 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from apps.account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm, ProfileRegistrationForm, LoginForm
-from apps.account.models import Profile
+from apps.account.forms import UserRegistrationForm, UserEditForm, LoginForm
+
 from apps.repair.models import RepairInformation
 from apps.student.models import StudentInformation
 
-
-@login_required
-def dashboard(request):
-    return render(request,
-                  'account/dashboard.html')
-
+# @login_required
+# def dashboard(request):
+#     return render(request,
+#                   'account/dashboard.html')
 
 def user_login(request):
     if request.method == 'POST':
@@ -26,7 +25,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('/')
+                    print(Group.objects.get(user=user))
+                    if Group.objects.get(user=user) == Group.objects.get(name='U'):
+                        return redirect('/student')
+                    elif Group.objects.get(user=user) == Group.objects.get(name='R'):
+                        return redirect('/repair')
                 else:
                     form = LoginForm()
                     return render(request,
@@ -52,8 +55,7 @@ def user_logout(request):
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
-        profile_form = ProfileRegistrationForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
             # Set the chosen password
@@ -61,12 +63,14 @@ def register(request):
                 user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            # Create the user profile
-            profile = Profile.objects.create(user=new_user,
-                                             role=request.POST.get('role'))
-            if request.POST.get('role') == 'U':
+            # add the user to group
+            if request.POST.get('name') == 'U':
+                group = Group.objects.get(name='U')
+                new_user.groups.add(group)
                 student_information = StudentInformation.objects.create(user=new_user)
-            elif request.POST.get('role') == 'R':
+            elif request.POST.get('name') == 'R':
+                group = Group.objects.get(name='R')
+                new_user.groups.add(group)
                 repair_information = RepairInformation.objects.create(user=new_user)
             form = LoginForm()
             return render(request,
@@ -74,8 +78,6 @@ def register(request):
                           {'form': form, 'message': "注册成功，请登录!"})
     else:
         user_form = UserRegistrationForm()
-        profile_form = ProfileRegistrationForm()
     return render(request,
                   'account/register.html',
-                  {'user_form': user_form,
-                   'profile_form': profile_form})
+                  {'user_form': user_form})
