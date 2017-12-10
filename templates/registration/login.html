@@ -10,14 +10,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号：</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="username" autofocus="" maxlength="254" required=""
-                           id="id_username">
+                    {{ form.username }}
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">密码：</label>
                 <div class="layui-input-inline">
-                    <input type="password" class="layui-input" name="password" required="" id="id_password">
+                    {{ form.password }}
                 </div>
             </div>
             {% csrf_token %}
@@ -27,15 +26,40 @@
                 <button type="submit" class="layui-btn btn-submit">立即登录</button>
             </div>
         </form>
-        {% if form.errors %}
-            <span style="color: red">您的账号或者密码不正确。</span>
-            <a href="{% url "password_reset" %}">忘记密码？</a>
-        {% endif %}
-        {% if message %}
-            <span style="color: red">{{ message }}</span>
-        {% endif %}
     </div>
 {% endblock %}
 {% block templates_script %}
-    <script src="{% static 'js/registration/login.js' %}"></script>
+    <script>
+        layui.use(['layer', 'element', 'form'], function () {
+            var layer = layui.layer,
+                element = layui.element,
+                form = layui.form;
+            {% if error %}
+                var login_msg = "{{ error }}";
+                if (login_msg) {
+                    layer.msg(login_msg, {
+                        icon: 5,
+                        zIndex: 19970531,
+                        time: 1000,
+                        shade: [0.5, '#FFF'],
+                        shadeClose: true
+                    });
+                }
+            {% endif %}
+             {% if message %}
+                var login_msg = "{{ message }}";
+                if (login_msg) {
+                    layer.msg(login_msg, {
+                        icon: 1,
+                        zIndex: 19970531,
+                        time: 1000,
+                        shade: [0.5, '#FFF'],
+                        shadeClose: true
+                    });
+                }
+            {% endif %}
+
+        });
+    </script>
+    {#    <script src="{% static 'js/registration/login.js' %}"></script>#}
 {% endblock %}

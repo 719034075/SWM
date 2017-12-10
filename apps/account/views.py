@@ -1,11 +1,12 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
-from apps.account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm, ProfileRegistrationForm
+from apps.account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm, ProfileRegistrationForm, LoginForm
 from apps.account.models import Profile
+from apps.repair.models import RepairInformation
 from apps.student.models import StudentInformation
 
 
@@ -13,6 +14,37 @@ from apps.student.models import StudentInformation
 def dashboard(request):
     return render(request,
                   'account/dashboard.html')
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(username=cd['username'],
+                                password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('/')
+                else:
+                    form = LoginForm()
+                    return render(request,
+                                  'registration/login.html',
+                                  {'form': form, 'error': "您的账号或者密码不正确!"})
+            else:
+                form = LoginForm()
+                return render(request,
+                              'registration/login.html',
+                              {'form': form, 'error': "您的账号或者密码不正确!"})
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('/login')
 
 
 def register(request):
@@ -30,10 +62,14 @@ def register(request):
             # Create the user profile
             profile = Profile.objects.create(user=new_user,
                                              role=request.POST.get('role'))
-            student_information = StudentInformation.objects.create(user=new_user)
+            if request.POST.get('role') == 'U':
+                student_information = StudentInformation.objects.create(user=new_user)
+            elif request.POST.get('role') == 'R':
+                repair_information = RepairInformation.objects.create(user=new_user)
+            form = LoginForm()
             return render(request,
                           'registration/login.html',
-                          {'message': "注册成功，请登录!"})
+                          {'form': form, 'message': "注册成功，请登录!"})
     else:
         user_form = UserRegistrationForm()
         profile_form = ProfileRegistrationForm()

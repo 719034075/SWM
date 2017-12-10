@@ -6,6 +6,11 @@ from django.contrib.auth.models import User
 from apps.account.models import Profile
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'layui-input'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'layui-input'}))
+
+
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password',
                                widget=forms.PasswordInput)
@@ -42,4 +47,4 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('role', )
+        fields = ('role',)

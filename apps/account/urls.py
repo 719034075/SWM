@@ -5,12 +5,13 @@ from django.contrib.auth.views import login, logout, logout_then_login, password
     password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 
 from apps.account import views
+from apps.account.views import user_login, user_logout
 
 urlpatterns = [
 
     # login logout
-    url(r'^login/$', login, name='login'),
-    url(r'^logout/$', logout, name='logout'),
+    url(r'^login/$', user_login, name='login'),
+    url(r'^logout/$', user_logout, name='logout'),
     url(r'^logout-then-login/$', logout_then_login, name='logout_then_login'),
     # change password
     url(r'^password-change/$', password_change, name='password_change'),

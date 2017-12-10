@@ -1,6 +1,10 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-10
+
++ add an app for repair
+
 ## 2017-12-09
 
 + delete user-avatar
