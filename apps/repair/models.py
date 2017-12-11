@@ -17,7 +17,7 @@ class RepairInformation(models.Model):
     class Meta:
         db_table = 'repair_information'
         permissions = (
-            ("view_repair_dashboard", "Can view the  repair dashboard"),
+            ("view_repair_dashboard", "Can view the repair dashboard"),
             ("edit_repair_information", "Can edit the repair information")
         )
 

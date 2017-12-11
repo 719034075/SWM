@@ -43,6 +43,7 @@ EXTERNAL_APPS = [
     'apps.account',
     'apps.student',
     'apps.repair',
+    'apps.washmachine'
 ]
 
 INSTALLED_APPS = BUILT_IN_APPS + EXTERNAL_APPS

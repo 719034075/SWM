@@ -21,7 +21,6 @@
                 </div>
             </div>
             {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}"/>
             <div class="layui-form-item">
                 <a name="register" href="{% url "register" %}" class="layui-btn btn-reset layui-btn-danger">注册</a>
                 <button type="submit" class="layui-btn btn-submit">立即登录</button>
