@@ -27,7 +27,6 @@ def edit_student_information(request):
             return render(request,
                           'account/dashboard.html')
     else:
-        print(dir(request.user))
         user_form = UserEditForm(instance=request.user)
         student_information_form = StudentInformationEditForm(instance=request.user.studentinformation)
 

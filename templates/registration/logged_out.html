@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %}Logged out{% endblock %}
 {% block content %}
+    <div id="large-header" class="large-header"
+         style="background-image:url({% static 'images/background.jpg' %});"></div>
     <div class="login-form account-box login-box">
         <form class="layui-form layui-form-pane" action="{% url 'login' %}" method="post">
             <div class="layui-form-item">

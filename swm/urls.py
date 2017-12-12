@@ -24,9 +24,9 @@ urlpatterns = [
     url(r'^', include('apps.account.urls')),
     url(r'^student/', include('apps.student.urls')),
     url(r'^repair/', include('apps.repair.urls')),
-    url(r'washmachine/',include('apps.washmachine.urls'))
+    url(r'^washmachine/', include('apps.washmachine.urls')),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+#
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                           document_root=settings.MEDIA_ROOT)

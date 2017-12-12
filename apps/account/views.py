@@ -10,6 +10,7 @@ from apps.account.forms import UserRegistrationForm, UserEditForm, LoginForm
 from apps.repair.models import RepairInformation
 from apps.student.models import StudentInformation
 
+
 # @login_required
 # def dashboard(request):
 #     return render(request,
@@ -25,11 +26,12 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    print(Group.objects.get(user=user))
                     if Group.objects.get(user=user) == Group.objects.get(name='U'):
-                        return redirect('/student')
+                        return render(request,
+                                      'student/dashboard.html')
                     elif Group.objects.get(user=user) == Group.objects.get(name='R'):
-                        return redirect('/repair')
+                        return render(request,
+                                      'repair/dashboard.html')
                 else:
                     form = LoginForm()
                     return render(request,

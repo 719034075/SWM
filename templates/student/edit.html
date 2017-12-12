@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %}Edit your account{% endblock %}
 {% block content %}
+    <div id="large-header" class="large-header"
+         style="background-image:url({% static 'images/background.jpg' %});"></div>
     <div class="login-form account-box register-box">
         <form class="layui-form layui-form-pane" action="." method="post">
             <div class="layui-form-item">
@@ -50,7 +52,8 @@
             </div>
             {% csrf_token %}
             <div class="layui-form-item">
-                <a name="register" href="{% url "view_student_dashboard" %}" class="layui-btn btn-reset layui-btn-danger">返回</a>
+                <a name="register" href="{% url "view_student_dashboard" %}"
+                   class="layui-btn btn-reset layui-btn-danger">返回</a>
                 <button type="submit" class="layui-btn btn-submit">保存修改</button>
             </div>
         </form>

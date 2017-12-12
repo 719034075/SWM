@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %}Log-in{% endblock %}
 {% block content %}
+    <div id="large-header" class="large-header"
+         style="background-image:url({% static 'images/background.jpg' %});"></div>
     <div class="login-form account-box login-box">
         <form class="layui-form layui-form-pane" action="{% url 'login' %}" method="post">
             <div class="layui-form-item">
@@ -46,7 +48,7 @@
                     });
                 }
             {% endif %}
-             {% if message %}
+            {% if message %}
                 var login_msg = "{{ message }}";
                 if (login_msg) {
                     layer.msg(login_msg, {
