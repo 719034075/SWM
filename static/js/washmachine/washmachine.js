@@ -60,52 +60,29 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             });
         }
     });
+
+    //新建一台洗衣机
     $('#add').on('click', function () {
-        var appAdd = uniplug.popUp.init({
+        var washmachineAdd = common.popUp.init({
             boxUrl: '/washmachineForm',
             tplType: 'washmachine',
             popType: 'add',
             success: function (layero, index) {
-                var $addForm = $('#app');
-
                 //弹出窗口成功后渲染表单
-                var app = new Vue({
-                    el: '#app',
-                    data: {name: '', docserverid: '', org: '', contact: '', mphone: '', ip: '', hasDocServer: true}, //兼容ie
-                    computed: {
-                        mphoneTips: function () {
-                            return uniplug.verifyTips.mphoneTips(this.mphone);
-                        },
-                        ipTips: function () {
-                            return uniplug.verifyTips.ipTips(this.ip);
-                        }
-                    },
-                    methods: {
-                        setDocServerIdValue: function () {
-                            this.docserverid = this.$refs.docserverid.value;
-                        }
-                    }
+                var washmachineVue = new Vue({
+                    el: '#washmachine',
+                    data: {machine_id: '', dormitory_building_number: ''} //兼容ie
                 });
-                if (servicetype == 1) {
-                    app.hasDocServer = false
-                } else {
-                    app.hasDocServer = true;
-                }
-                form.on('select(docserverid)', function (data) {
-                    app.setDocServerIdValue();
-                });
-                form.render('select');
                 form.on('submit(edit)', function (data) {
-                    data.field.adminid = userID;
                     //这里可以写ajax方法提交表单
-                    axios.post('/app/add', data.field)
+                    axios.post('/washmachine/add/', data.field)
                         .then(function (response) {
-                            uniplug.responseMessage({pg: pg, response: response.data});
-                            appAdd.config.box = -1;
+                            common.responseMessage({pg: pg, response: response.data});
+                            washmachineAdd.config.box = -1;
                             layer.close(index);
                         })
                         .catch(function (error) {
-                            // console.log(error);
+                            console.error(error);
                         });
                     return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
                 });
@@ -115,16 +92,16 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
 
     //删除一台洗衣机
     function deleteWashmachine(id) {
-           var confirmindex =layer.confirm('确定删除该台洗衣机吗？',{
-            icon:7,
-            btn:['确定','取消']
-        },function () {
+        var confirmindex = layer.confirm('确定删除该台洗衣机吗？', {
+            icon: 7,
+            btn: ['确定', '取消']
+        }, function () {
             layer.close(confirmindex);
-            var loadindex= layer.load(2);
-            axios.get('/washmachine/remove/'+id+'/')
+            var loadindex = layer.load(2);
+            axios.get('/washmachine/remove/' + id + '/')
                 .then(function (response) {
                     layer.close(loadindex);
-                    common.responseMessage({pg:pg,response:response.data});
+                    common.responseMessage({pg: pg, response: response.data});
                 })
                 .catch(function (error) {
                     console.error(error)

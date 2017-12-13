@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div style="margin: 15px;">
+    <form class="layui-form" id="washmachine">
+        <div class="layui-form-item">
+            <label class="layui-form-label label-width">洗衣机编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="machine_id" required lay-verify="required" placeholder="请输入洗衣机编号" autocomplete="off" class="layui-input" v-model="machine_id">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red">*</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-width">寝室楼号</label>
+            <div class="layui-input-inline">
+                <input type="number" name="dormitory_building_number" required lay-verify="required" placeholder="请输入业务系统IP" autocomplete="off" class="layui-input" v-model="dormitory_building_number">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red">*</div>
+        </div>
+        <button lay-filter="edit" lay-submit style="display: none;"></button>
+    </form>
+</div>
