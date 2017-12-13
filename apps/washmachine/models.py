@@ -21,7 +21,8 @@ class WashMachine(models.Model):
             ("remove_washmachine", "Can remove a washmachine"),
             ("modify_washmachine", "Can modify a washmachine"),
             ("findOne_washmachine", "Can find a washmachine"),
-            ("findAllOfCondition_washmachine", "Can find all washmachines of condition")
+            ("findAllOfCondition_washmachine", "Can find all washmachines of condition"),
+            ("view_washmachineForm", "Can view the washmachine form")
         )
 
     def __str__(self):

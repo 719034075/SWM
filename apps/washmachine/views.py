@@ -17,8 +17,9 @@ from utils.ResponseBean import ResponseBean
 @csrf_exempt
 def add_washmachine(request):
     if request.method == 'POST':
-        machine_id = request.POST.get('machine_id')
-        dormitory_building_number = request.POST.get('dormitory_building_number')
+        d = json.loads(str(request.body, encoding="utf-8"))
+        machine_id = d['machine_id']
+        dormitory_building_number = d['dormitory_building_number']
         state = 'F'
         new_washmachine = WashMachine.objects.create(machine_id=machine_id,
                                                      dormitory_building_number=dormitory_building_number,
@@ -27,7 +28,7 @@ def add_washmachine(request):
         response = ResponseBean().get_success_instance()
         response.message = '新建洗衣机成功。'
         print(json.dumps(response.__dict__))
-        return JsonResponse(json.dumps(response.__dict__))
+        return JsonResponse(response.__dict__)
     else:
         response = ResponseBean().get_fail_instance()
         response.message = '新建洗衣机失败。'
@@ -109,6 +110,12 @@ def findAllOfCondition_washmachine(request):
 @permission_required('washmachine.view_washmachine')
 @login_required
 def view_washmachine(request):
-    print("view_washmachine")
     return render(request,
                   'washmachine/washmachine.html')
+
+
+@permission_required('washmachine.view_washmachineForm')
+@login_required
+def view_washmachineForm(request):
+    return render(request,
+                  'washmachine/washmachineForm.html')

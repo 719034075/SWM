@@ -5,6 +5,7 @@ a django web about school washing machine.
 
 + `washmachine/findAllOfCondition/`
 + `washmachine/remove/{id}/`
++ `washmachine/add/`
 
 ## 2017-12-12
 

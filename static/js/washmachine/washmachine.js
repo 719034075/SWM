@@ -64,7 +64,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
     //新建一台洗衣机
     $('#add').on('click', function () {
         var washmachineAdd = common.popUp.init({
-            boxUrl: '/washmachineForm',
+            boxUrl: '/washmachine/washmachineForm/',
             tplType: 'washmachine',
             popType: 'add',
             success: function (layero, index) {
