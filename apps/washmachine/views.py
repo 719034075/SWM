@@ -43,8 +43,7 @@ def remove_washmachine(request, id):
     washmachine.delete()
     response = ResponseBean().get_success_instance()
     response.message = '删除洗衣机成功。'
-    print(json.dumps(response.__dict__))
-    return JsonResponse(json.dumps(response.__dict__))
+    return JsonResponse(response.__dict__)
 
 
 @permission_required('washmachine.modify_washmachine')

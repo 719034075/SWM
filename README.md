@@ -3,7 +3,8 @@ a django web about school washing machine.
 
 ## 2017-12-13
 
-+ `washmachine/findAllOfCondition`
++ `washmachine/findAllOfCondition/`
++ `washmachine/remove/{id}/`
 
 ## 2017-12-12
 

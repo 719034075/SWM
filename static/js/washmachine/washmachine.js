@@ -36,13 +36,13 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         fail: function (msg) { //获取数据失败的回调
         },
         complate: function () { //完成的回调
-            var $content = $('#content');
+            var $table_content = $('#table_content');
             //重新渲染复选框
             form.render('checkbox');
             form.on('checkbox(allselector)', function (data) {
                 var elem = data.elem;
 
-                $content.children('tr').each(function () {
+                $table_content.children('tr').each(function () {
                     var $that = $(this);
                     //全选或反选
                     $that.children('td').eq(0).children('input[type=checkbox]')[0].checked = elem.checked;
@@ -50,11 +50,12 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 });
             });
 
-            $content.children('tr').each(function () {
+            $table_content.children('tr').each(function () {
                 var $that = $(this);
                 //绑定所有详情按钮事件
-                $that.children('td:last-child').children('a[data-opt=details]').on('click', function () {
-                    details($that.data('id'));
+                $that.children('td:last-child').children('a[data-opt=delete]').on('click', function () {
+                    console.log($that.data('id'))
+                    deleteWashmachine($that.data('id'));
                 });
             });
         }
@@ -111,6 +112,26 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             }
         })
     });
+
+    //删除一台洗衣机
+    function deleteWashmachine(id) {
+           var confirmindex =layer.confirm('确定删除该台洗衣机吗？',{
+            icon:7,
+            btn:['确定','取消']
+        },function () {
+            layer.close(confirmindex);
+            var loadindex= layer.load(2);
+            axios.get('/washmachine/remove/'+id+'/')
+                .then(function (response) {
+                    layer.close(loadindex);
+                    common.responseMessage({pg:pg,response:response.data});
+                })
+                .catch(function (error) {
+                    console.error(error)
+                });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    }
 
     //刷新
     $('#reload').on('click', function () {
