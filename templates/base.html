@@ -67,6 +67,11 @@
     <script src="{% static 'lib/axios.min.js' %}"></script>
     <script src="{% static 'lib/layui/layui.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
+    <script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+        });
+    </script>
     {% block templates_script %}
     {% endblock %}
 </body>

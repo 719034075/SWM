@@ -1,6 +1,10 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-13
+
++ `washmachine/findAllOfCondition`
+
 ## 2017-12-12
 
 + add washmachine templates

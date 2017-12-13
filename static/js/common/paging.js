@@ -26,7 +26,7 @@ layui.define(['layer', 'laypage', 'laytpl'], function (exports) {
             paged: true,
             pageConfig: { //参数应该为object类型
                 elem: undefined,
-                pageSize: undefined //分页大小
+                page_size: undefined //分页大小
             },
             success: undefined, //type:function
             fail: function (msg) { layer.msg(msg, { icon: 2 }); }, //type:function
@@ -85,8 +85,8 @@ layui.define(['layer', 'laypage', 'laytpl'], function (exports) {
             throwError('Paging Error:type参数配置出错，只支持GET或者POST');
         }
         that.get({
-            pageIndex: defaultPageIndex,
-            pageSize: _config.pageConfig.pageSize
+            page_index: defaultPageIndex,
+            page_size: _config.pageConfig.page_size
         });
 
         return that;
@@ -134,9 +134,9 @@ layui.define(['layer', 'laypage', 'laytpl'], function (exports) {
                         var _pageConfig = _config.pageConfig;
                         var defaults = {
                             elem: _pageConfig.elem,
-                            curr: _config.params.pageIndex,
+                            curr: _config.params.page_index,
                             count:result.data.total,
-                            layout:['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                            layout:['count', 'prev', 'page', 'next'],
                             jump: function (obj, first) {
                                 //得到了当前页，用于向服务端请求对应数据
                                 var curr = obj.curr;
@@ -144,8 +144,8 @@ layui.define(['layer', 'laypage', 'laytpl'], function (exports) {
                                 _pageConfig.limit=limit;//否则页面尺寸的组件渲染会异常
                                 if (!first) {
                                     that.get({
-                                        pageIndex: curr,
-                                        pageSize: limit
+                                        page_index: curr,
+                                        page_size: limit
                                     });
                                 }
                             }
