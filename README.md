@@ -1,6 +1,11 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-14
+
++ `washmachine/findOne/{id}`
++ `washmachine/modify/`
+
 ## 2017-12-13
 
 + `washmachine/findAllOfCondition/`

@@ -32,8 +32,7 @@ def add_washmachine(request):
     else:
         response = ResponseBean().get_fail_instance()
         response.message = '新建洗衣机失败。'
-        print(json.dumps(response.__dict__))
-        return JsonResponse(json.dumps(response.__dict__))
+        return JsonResponse(response.__dict__)
 
 
 @permission_required('washmachine.remove_washmachine')
@@ -51,7 +50,19 @@ def remove_washmachine(request, id):
 @login_required
 @csrf_exempt
 def modify_washmachine(request):
-    pass
+    if request.method == 'POST':
+        d = json.loads(str(request.body, encoding="utf-8"))
+        washmachine = get_object_or_404(WashMachine, id=d['id'])
+        if 'machine_id' in d.keys():
+            washmachine.machine_id = d['machine_id']
+        if 'dormitory_building_number' in d.keys():
+            washmachine.dormitory_building_number = d['dormitory_building_number']
+        if 'state' in d.keys():
+            washmachine.state = d['state']
+        washmachine.save()
+        response = ResponseBean().get_success_instance()
+        response.message = '修改洗衣机信息成功。'
+        return JsonResponse(response.__dict__)
 
 
 @permission_required('washmachine.findOne_washmachine')
@@ -59,11 +70,11 @@ def modify_washmachine(request):
 @csrf_exempt
 def findOne_washmachine(request, id):
     washmachine = get_object_or_404(WashMachine, id=id)
+    washmachine.__dict__.pop('_state')
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
-    response.data = washmachine
-    print(json.dumps(response.__dict__))
-    return JsonResponse(json.dumps(response.__dict__))
+    response.data = washmachine.__dict__
+    return JsonResponse(response.__dict__)
 
 
 @permission_required('washmachine.findAllOfCondition_washmachine')

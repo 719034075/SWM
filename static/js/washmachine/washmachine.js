@@ -53,8 +53,15 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             $table_content.children('tr').each(function () {
                 var $that = $(this);
                 //绑定所有详情按钮事件
+                $that.children('td:last-child').children('a[data-opt=details]').on('click', function () {
+                    details($that.data('id'));
+                });
+                 //绑定所有编辑按钮事件
+                $that.children('td:last-child').children('a[data-opt=edit]').on('click', function() {
+                    edit($that.data('id'));
+                });
+                //绑定所有删除按钮事件
                 $that.children('td:last-child').children('a[data-opt=delete]').on('click', function () {
-                    console.log($that.data('id'))
                     deleteWashmachine($that.data('id'));
                 });
             });
@@ -68,13 +75,11 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             tplType: 'washmachine',
             popType: 'add',
             success: function (layero, index) {
-                //弹出窗口成功后渲染表单
                 var washmachineVue = new Vue({
                     el: '#washmachine',
-                    data: {machine_id: '', dormitory_building_number: ''} //兼容ie
+                    data: {machine_id: '', dormitory_building_number: ''}
                 });
                 form.on('submit(edit)', function (data) {
-                    //这里可以写ajax方法提交表单
                     axios.post('/washmachine/add/', data.field)
                         .then(function (response) {
                             common.responseMessage({pg: pg, response: response.data});
@@ -84,11 +89,49 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                         .catch(function (error) {
                             console.error(error);
                         });
-                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                    return false;
                 });
             }
         })
     });
+
+    //洗衣机详情
+    function details(id) {
+        common.details.init({
+            id:id,
+            tplType:'washmachine'
+        })
+    }
+
+        function edit(id){
+
+        var washmachineEdit=common.popUp.init({
+            boxUrl:'/washmachine/washmachineForm/',
+            tplType:'washmachine',
+            popType:'edit',
+            id:id,
+            success:function(layero, index) {
+                var washmachineVue = new Vue({
+                    el: '#washmachine',
+                    data: washmachineEdit.config.dataInfo
+                });
+                form.render();
+                form.on('submit(edit)', function(data) {
+                    data.field.id=id;
+                    axios.post('/washmachine/modify/',data.field)
+                        .then(function (response) {
+                            common.responseMessage({pg:pg,response:response.data});
+                            washmachineEdit.config.box = -1;
+                            layer.close(index);
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                    return false;
+                });
+            }
+        });
+    }
 
     //删除一台洗衣机
     function deleteWashmachine(id) {

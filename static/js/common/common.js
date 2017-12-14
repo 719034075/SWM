@@ -342,7 +342,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
             url: undefined,
             tplType: undefined,
             shade: [0.5, '#FFF'],
-            offset: ['10%', '30%'],
+            offset: ['30%', '35%'],
             area: 'auto',
             zIndex: 19950924,
             yes: undefined,//type:function
@@ -415,47 +415,8 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
             var that = this;
             var tpl;
             switch (tplType) {
-                case 'user':
-                    tpl = that.detailsTpl.userDetailsTpl;
-                    break;
-                case 'normUser':
-                    tpl = that.detailsTpl.normUserDetailsTpl;
-                    break;
-                case 'appUser':
-                    tpl = that.detailsTpl.appUserDetailsTpl;
-                    break;
-                case 'app':
-                    tpl = that.detailsTpl.appDetailsTpl;
-                    break;
-                case 'cert':
-                    tpl = that.detailsTpl.certDetailsTpl;
-                    break;
-                case 'org':
-                    tpl = that.detailsTpl.orgDetailsTpl;
-                    break;
-                case 'secretKey':
-                    tpl = that.detailsTpl.secretKeyDetailsTpl;
-                    break;
-                case 'sysConf':
-                    tpl = that.detailsTpl.sysConfDetailsTpl;
-                    break;
-                case 'docServer':
-                    tpl = that.detailsTpl.docServerDetailsTpl;
-                    break;
-                case 'log':
-                    tpl = that.detailsTpl.logDetailsTpl;
-                    break;
-                case 'whitelist':
-                    tpl = that.detailsTpl.whitelistDetailsTpl;
-                    break;
-                case 'signpicname':
-                    tpl = that.detailsTpl.signpicnameDetailsTpl;
-                    break;
-                case 'usedCert':
-                    tpl = that.detailsTpl.usedcertDetailsTpl;
-                    break;
-                case 'CRLConf':
-                    tpl = that.detailsTpl.crlConfDetailsTpl;
+                case 'washmachine':
+                    tpl = that.detailsTpl.washmachineDetailsTpl;
                     break;
                 default:
                     tpl = '详情模版选择错误';
@@ -473,47 +434,8 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
         getTitle: function (tplType) {
             var title;
             switch (tplType) {
-                case 'user':
-                    title = '业务系统管理员详情';
-                    break;
-                case 'normUser':
-                    title = '单列用户详情';
-                    break;
-                case 'appUser':
-                    title = '业务系统用户详情';
-                    break;
-                case 'app':
-                    title = '业务系统详情';
-                    break;
-                case 'cert':
-                    title = '证书详情';
-                    break;
-                case 'org':
-                    title = '组织详情';
-                    break;
-                case 'secretKey':
-                    title = '密钥详情';
-                    break;
-                case 'sysConf':
-                    title = '系统参数详情';
-                    break;
-                case 'docServer':
-                    title = '签章服务器详情';
-                    break;
-                case 'log':
-                    title = '日志详情';
-                    break;
-                case 'whitelist':
-                    title = '白名单IP详情';
-                    break;
-                case 'signpicname':
-                    title = '电子印章详情';
-                    break;
-                case 'usedCert':
-                    title = '历史证书详情';
-                    break;
-                case 'CRLConf':
-                    title = 'crl配置详情';
+                case 'washmachine':
+                    title = '洗衣机详情';
                     break;
                 default:
                     title = '详情';
@@ -530,48 +452,10 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
         getArea: function (tplType) {
             var area;
             switch (tplType) {
-                case 'user':
+                case 'washmachine':
                     area = '400px';
                     break;
-                case 'normUser':
-                    area = '400px';
-                    break;
-                case 'appUser':
-                    area = '450px';
-                    break;
-                case 'app':
-                    area = '400px';
-                    break;
-                case 'cert':
-                    area = '400px';
-                    break;
-                case 'org':
-                    area = '400px';
-                    break;
-                case 'secretKey':
-                    area = '400px';
-                    break;
-                case 'sysConf':
-                    area = '400px';
-                    break;
-                case 'docServer':
-                    area = '400px';
-                    break;
-                case 'log':
-                    area = '400px';
-                    break;
-                case 'whitelist':
-                    area = '400px';
-                    break;
-                case 'signpicname':
-                    area = '450px';
-                    break;
-                case 'usedCert':
-                    area = '400px';
-                    break;
-                case 'CRLConf':
-                    area = '400px';
-                    break;
+
                 default:
                     area = '400px';
                     break;
@@ -584,299 +468,26 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
          */
         detailsTpl: {
             //业务系统管理员详情模板
-            userDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var regtime="-";}}'
-                , '{{# if(item.regtime){regtime=layui.uniplug.date.datetimeFormat_2(item.regtime);}}}'
-                , '<div>用户名：{{ item.username?item.username:"-"  }}</div>'
-                , '<div>邮箱：{{ item.email?item.email:"-"  }}</div>'
-                , '<div>手机：{{ item.mphone?item.mphone:"-"  }}</div>'
-                , '<div>用户真实姓名：{{ item.realname?item.realname:"-"  }}</div>'
-                , '<div>身份证：{{ item.socialsecid?item.socialsecid:"-"  }}</div>'
-                , '<div>单位名称：{{ item.org?item.org:"-"  }}</div>'
-                , '{{# if(item.apps.length===0){ }}'
-                , '<div>业务系统： - </div>'
-                , '{{# } }}'
-                , '{{# if(item.apps.length!==0){ }}'
-                , '<div>业务系统：'
-                , '{{# layui.each(item.apps,function(appIndex,appItem){ }}'
-                , '{{appItem.name}} '
-                , '{{# }); }}'
-                , '</div>'
-                , '{{# } }}'
-                , '<div>注册时间：{{ regtime }}</div>'
-                , '<div>用户类型：{{ item.category===1?"业务系统管理员":"系统管理员" }}</div>'
-                , '<div>用户状态：{{ item.state===1?"启用":"禁用" }}</div>'
-                , '</div>'].join(''),
-
-            //单列用户详情模板
-            normUserDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var certype="-";}}'
-                , '{{# if(item.idtype==1){certype="身份证" }}}'
-                , '{{# if(item.idtype==2){certype="军官证" }}}'
-                , '{{# if(item.idtype==3){certype="士兵证" }}}'
-                , '{{# if(item.idtype==4){certype="护照" }}}'
-                , '<div>区域：{{ item.province?item.province:"-" }}/{{ item.city?item.city:"-" }}/{{ item.region?item.region:"-" }}</div>'
-                , '<div>姓名：{{ item.name?item.name:"-"  }}</div>'
-                , '<div>性别：{{ item.sex?item.sex:"-" }}</div>'
-                , '<div>单位/组织：{{ item.org?item.org:"-"  }}</div>'
-                , '<div>证件类型：{{ certype  }}</div>'
-                , '<div>证件号码：{{ item.idnum?item.idnum:"-"  }}</div>'
-                , '<div>联系地址：{{ item.addr?item.addr:"-"  }}</div>'
-                , '<div>邮政编码：{{ item.zipcode?item.zipcode:"-"  }}</div>'
-                , '<div>绑定用户手机：{{ item.mphone?item.mphone:"-"  }}</div>'
-                , '<div>是否发送短信：{{ item.sendsms==1?"发送":"不发送"  }}</div>'
-                , '<div>证书id：{{ item.certid?item.certid:"-" }}</div>'
-                , '<div>密钥id：{{ item.secretkeyid?item.secretkeyid:"-" }}</div>'
-                , '</div>'].join(''),
-
-            //业务系统用户详情模板
-            appUserDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var certype="-";}}'
-                , '{{# if(item.idtype==1){certype="身份证" }}}'
-                , '{{# if(item.idtype==2){certype="军官证" }}}'
-                , '{{# if(item.idtype==3){certype="士兵证" }}}'
-                , '{{# if(item.idtype==4){certype="护照" }}}'
-                , '<div>业务系统：{{ item.appid?item.appName:"-"  }}</div>'
-                , '<div>绑定用户id：{{ item.userid?item.userid:"-"  }}</div>'
-                , '<div>证件类型：{{ certype }}</div>'
-                , '<div>证件号码：{{ item.idnum?item.idnum:"-"  }}</div>'
-                , '<div>姓名：{{ item.name?item.name:"-"  }}</div>'
-                , '<div>联系地址：{{ item.addr?item.addr:"-"  }}</div>'
-                , '<div>邮政编码：{{ item.zipcode?item.zipcode:"-"  }}</div>'
-                , '<div>绑定用户手机：{{ item.mphone?item.mphone:"-"  }}</div>'
-                , '<div>是否发送短信：{{ item.sendsms==1?"发送":"不发送"  }}</div>'
-                , '<div>证书id：{{ item.certid?item.certid:"-"  }}</div>'
-                , '<div>密钥id：{{ item.secretkeyid?item.secretkeyid:"-" }}</div>'
-                , '{{# if(!item.sealid) { }}'
-                , '<div class="hasDocServer">签名图片：-</div>'
-                , '{{#}}}'
-                , '{{# if(item.sealid) { }}'
-                , '<div class="hasDocServer">签名图片：<img id="pic"></div>'
-                , '<div class="hasDocServer" id="slider"></div>'
-                , '{{#}}}'
-                , '</div>'].join(''),
-
-            //业务系统详情模板
-            appDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var regtime="-";}}'
-                , '{{# if(item.regtime){regtime=layui.uniplug.date.datetimeFormat_2(item.regtime);}}}'
-                , '<div>业务系统名称：{{ item.name?item.name:"-"  }}</div>'
-                , '<div>业务系统ID：{{ item.appid  }}</div>'
-                , '<div><span id="showSecret" style="display: none">业务系统密码：{{item.appsecret?item.appsecret:"-"}}</span>'
-                , '<span id="hideSecret">业务系统密码：****** </span>'
-                , '<a href="javascript:void(0);" id="showBtn" class="layui-btn layui-btn-normal layui-btn-mini">显示</a>'
-                // ,'<a href="javascript:void(0);" style="display: none" id="hideBtn" class="layui-btn layui-btn-normal layui-btn-mini">隐藏</a>'
-                , '</div>'
-                // ,'<div class="hasDocServer">业务所属签章服务器：{{ item.docserverName?item.docserverName:"-" }}</div>'
-                , '<div>所属组织/机构/部门：{{ item.org?item.org:"-"  }}</div>'
-                , '<div>联系人：{{ item.contact?item.contact:"-"  }}</div>'
-                , '<div>联系电话：{{ item.mphone?item.mphone:"-"  }}</div>'
-                , '<div>业务系统IP：{{item.ip?item.ip:"-"}}</div>'
-                , '<div>注册时间：{{ regtime }}</div>'
-                , '{{# if(item.adminid===0){ }}'
-                , '<div>业务系统管理员： - </div>'
-                , '{{# } }}'
-                , '{{# if(item.adminid!==0){ }}'
-                , '<div>业务系统管理员：{{item.adminName}}</div>'
-                , '{{# } }}'
-                , '</div>'].join(''),
-
-            //证书详情模板
-            certDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var startdate="-";}}'
-                , '{{# if(item.startdate){startdate=layui.uniplug.date.datetimeFormat_2(item.startdate);}}}'
-                , '{{# var enddate="-";}}'
-                , '{{# if(item.enddate){enddate=layui.uniplug.date.datetimeFormat_2(item.enddate);}}}'
-                , '<div>证书名称：{{ item.name?item.name:"-" }}</div>'
-                , '<div>证书颁发者：{{ item.issuer?item.issuer:"-" }}</div>'
-                , '<div>证书拥有者：{{ item.subject?item.subject:"-" }}</div>'
-                , '<div>证书序列号：{{ item.sn?item.sn:"-" }}</div>'
-                , '<div>证书生效日期：{{ startdate }}</div>'
-                , '<div>证书失效日期：{{ enddate }}</div>'
-                , '<div>证书有效性：{{ item.available==1?"可用":"禁用" }}</div>'
-                , '{{#  if(item.category==0){ }}'
-                , '<div>证书类型：-</div>'
-                , '{{#  } }}'
-                , '{{#  if(item.category==1){ }}'
-                , '<div>证书类型：个人证书</div>'
-                , '{{#  } }}'
-                , '{{#  if(item.category==2){ }}'
-                , '<div>证书类型：组织证书</div>'
-                , '{{#  } }}'
-                , '{{#  if(item.category==3){ }}'
-                , '<div>证书类型：根证书</div>'
-                , '{{#  } }}'
-                , '<div>证书文件名：{{ item.filename?item.filename:"-" }}</div>'
-                , '</div>'].join(''),
-
-            //组织详情模板
-            orgDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var certype="-";}}'
-                , '{{# if(item.idtype==1){certype="工商营业执照" }}}'
-                , '{{# if(item.idtype==2){certype="组织机构代码证" }}}'
-                , '{{# if(item.idtype==3){certype="事业法人登记证" }}}'
-                , '{{# if(item.idtype==4){certype="社团登记证" }}}'
-                , '{{# if(item.idtype==5){certype="其他" }}}'
-                , '<div>组织名称：{{ item.name?item.name:"-"  }}</div>'
-                , '<div>组织地址：{{ item.address?item.address:"-"  }}</div>'
-                , '<div>证书类型：{{ certype }}</div>'
-                , '<div>证书号码：{{ item.idnum?item.idnum:"-"  }}</div>'
-                , '<div>邮政编码：{{ item.zipcode?item.zipcode:"-"  }}</div>'
-                , '<div>联系人：{{ item.contact?item.contact:"-"  }}</div>'
-                , '<div>联系人身份证号：{{ item.contactssn?item.contactssn:"-"  }}</div>'
-                , '<div>联系电话：{{ item.mphone?item.mphone:"-"  }}</div>'
-                , '<div>组织类别：{{ item.sendsms==1?"发送":"不发送"  }}</div>'
-                , '<div>上级单位名称：{{ item.parentName?item.parentName:"-"  }}</div>'
-                , '<div>证书id：{{ item.certid?item.certid:"-" }}</div>'
-                , '<div>密钥id：{{ item.secretkeyid?item.secretkeyid:"-" }}</div>'
-                , '</div>'].join(''),
-
-            //密钥详情模板
-            secretKeyDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '<div>板卡密钥号：{{ item.keynum?item.keynum:"-"  }}</div>'
-                , '<div>算法：{{ item.alg==1?"RSA":"SM2"  }}</div>'
-                , '<div>密钥长度：{{ item.bits?item.bits:"-"  }}</div>'
-                , '<div>密钥有效性：{{ item.available==1?"可用":"禁用"  }}</div>'
-                , '<div>是否已被绑定用户：{{ item.binduser==1?"是":"否" }}</div>'
-                , '<div>是否已被绑定证书：{{ item.bindcert==1?"是":"否" }}</div>'
-                , '<div><span id="showP10" style="display: none;word-break: break-all;">P10：{{item.p10?item.p10:"-"}}</span>'
-                , '<span id="hideP10">P10：****** </span>'
-                , '<a href="javascript:void(0);" id="showBtn" class="layui-btn layui-btn-normal layui-btn-mini">显示</a>'
-                , '</div>'
-                , '</div>'].join(''),
-
-            //系统参数详情模板
-            sysConfDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '<div>参数名：{{ item.paraname?item.paraname:"-"  }}</div>'
-                , '<div>参数值：{{ item.paravalue?item.paravalue:"-"  }}</div>'
-                , '<div>参数含义：{{ item.meaning?item.meaning:"-"  }}</div>'
-                , '</div>'].join(''),
-
-            //签章服务器详情模板
-            docServerDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var deploy="-";}}'
-                , '{{# if(item.deploy==1){deploy="硬件"; }}}'
-                , '{{# if(item.deploy==2){deploy="软件"; }}}'
-                , '{{# var os="-";}}'
-                , '{{# if(item.os==1){os="Linux"; }}}'
-                , '{{# if(item.os==2){os="Windows"; }}}'
-                , '<div>签章服务器名称：{{ item.name?item.name:"-" }}</div>'
-                , '<div>签章服务器IP地址：{{ item.ip?item.ip:"-" }}</div>'
-                , '<div>部署方式：{{deploy}}</div>'
-                , '<div>操作系统：{{os}}</div>'
-                , '<div>部署位置：{{ item.where?item.where:"-" }}</div>'
-                // ,'<div>业务系统数：{{ item.appnum?item.appnum:"-" }}</div>'
-                , '</div>'].join(''),
-
-            //日志详情模板
-            logDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var operatetime="-"}}'
-                , '{{# if(item.operatetime){operatetime=layui.uniplug.date.datetimeFormat_2(item.operatetime);}}}'
-                , '{{# var usertype="-";}}'
-                , '{{# if(item.usertype==1){usertype="超级管理员" }}}'
-                , '{{# if(item.usertype==2){usertype="业务系统用户" }}}'
-                , '{{# if(item.usertype==3){usertype="单列用户" }}}'
-                , '{{# if(item.usertype==4){usertype="业务系统管理员" }}}'
-                , '<div>用户名：{{ item.username?item.username:"-"  }}</div>'
-                , '<div>用户类型：{{ usertype }}</div>'
-                , '<div>模块名称：{{ item.modulename?item.modulename:"-" }}</div>'
-                , '<div>操作名称：{{ item.operatename?item.operatename:"-" }}</div>'
-                , '<div>操作时间：{{ operatetime }}</div>'
-                , '<div>类名称：{{ item.classname?item.classname:"-" }}</div>'
-                , '<div>方法名称：{{ item.methodname?item.methodname:"-" }}</div>'
-                , '<div>传入参数：{{ item.params?item.params:"-" }}</div>'
-                , '<div>操作IP：{{ item.ip?item.ip:"-" }}</div>'
-                , '</div>'].join(''),
-
-            //白名单详情模板
-            whitelistDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '<div>IP地址：{{ item.ip?item.ip:"-"  }}</div>'
-                , '<div>备注：{{ item.memo?item.memo:"-" }}</div>'
-                , '{{# if(item.valid==1){ }}'
-                , '<div>有效性：是</div>'
-                , '{{# }}}'
-                , '{{# if(item.valid==2){ }}'
-                , '<div>有效性：否</div>'
-                , '{{# }}}'
-                , '</div>'].join(''),
-
-            //签章图片详情模板
-            signpicnameDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var validstart="-";}}'
-                , '{{# if(item.validstart){validstart=layui.uniplug.date.datetimeFormat_2(item.validstart);}}}'
-                , '{{# var validend="-";}}'
-                , '{{# if(item.validend){validend=layui.uniplug.date.datetimeFormat_2(item.validend);}}}'
-                , '<div>印章文件名：{{ item.sealfilename?item.sealfilename:"-" }}</div>'
-                , '<div>印章版本号：{{ item.sealversion?item.sealversion:"-" }}</div>'
-                , '<div>印章有效起始日期：{{ validstart }}</div>'
-                , '<div>印章有效终止日期：{{ validend }}</div>'
-                , '<div class="hasDocServer">签章图片：<img id="pic"></div>'
-                , '<div class="hasDocServer" id="slider"></div>'
-                , '</div>'].join(''),
-
-            //历史证书详情模版
-            usedcertDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var invalidtime="-";}}'
-                , '{{# if(item.invalidtime){invalidtime=layui.uniplug.date.datetimeFormat_2(item.invalidtime);}}}'
-                , '<div>用户唯一号：{{item.unicode}}</div>'
-                , '<div>证书ID：{{item.certid}}</div>'
-                , '{{# if(item.reason!=2&&item.reason!=3&&item.reason!=4&&item.reason!=5){}}'
-                , '<div>失效原因：未知失效原因</div>'
-                , '{{#}}}'
-                , '{{# if(item.reason==2){}}'
-                , '<div>失效原因：过期</div>'
-                , '{{#}}}'
-                , '{{# if(item.reason==3){}}'
-                , '<div>失效原因：注销</div>'
-                , '{{#}}}'
-                , '{{# if(item.reason==4){}}'
-                , '<div>失效原因：变更</div>'
-                , '{{#}}}'
-                , '{{# if(item.reason==5){}}'
-                , '<div>失效原因：挂失</div>'
-                , '{{#}}}'
-                , '<div>失效时间：{{invalidtime}}</div>'
-                , '</div>'].join(''),
-
-            //CRL配置详情模版
-            crlConfDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
-                , '{{# var item=d.data;}}'
-                , '{{# var startdate="-"}}'
-                , '{{# var enddate="-"}}'
-                , '{{# if(item.startdate){startdate=layui.uniplug.date.datetimeFormat_2(item.startdate);}}}'
-                , '{{# if(item.enddate){enddate=layui.uniplug.date.datetimeFormat_2(item.enddate);}}}'
-                , '<div>服务名称：{{ item.name?item.name:"-"  }}</div>'
-                , '{{# if(!item.type){}}'
-                , '<div>CRL分发点类型：-</div>'
-                , '{{#}}}'
-                , '{{# if(item.type===1){}}'
-                , '<div>CRL分发点类型：LDAP</div>'
-                , '{{#}}}'
-                , '{{# if(item.type===2){}}'
-                , '<div>CRL分发点类型：HTTP</div>'
-                , '{{#}}}'
-                , '{{# if(item.type===3){}}'
-                , '<div>CRL分发点类型：上传</div>'
-                , '{{#}}}'
-                , '<div>CRL获取地址：{{ item.url?item.url:"-" }}</div>'
-                , '<div>标识名：{{ item.dn?item.dn:"-" }}</div>'
-                , '<div>过滤条件：{{ item.filter?item.filter:"-" }}</div>'
-                , '<div>CRL本次更新时间：{{ startdate }}</div>'
-                , '<div>CRL下次更新时间：{{ enddate }}</div>'
-                , '<div>CRL文件名：{{ item.filename?item.filename:"-" }}</div>'
+            washmachineDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
+                , '<%# var item=d.data;%>'
+                , '<div>洗衣机编号：<% item.machine_id?item.machine_id:"-" %></div>'
+                , '<div>寝室楼号：<% item.dormitory_building_number?item.dormitory_building_number:"-" %></div>'
+                , '<div>运行状态：'
+                ,'<%# if(!item.state){ %>'
+                , '-'
+                , '<%# }%>'
+                , '<%# if(item.state==="F"){ %>'
+                , '空闲'
+                , '<%# }%>'
+                , '<%# if(item.state==="W"){ %>'
+                , '工作中'
+                , '<%# }%>'
+                , '<%# if(item.state==="B"){ %>'
+                , '故障'
+                , '<%# }%>'
+                , '<%# if(item.state==="D"){ %>'
+                , '待清洁'
+                , '<%# }%></div>'
                 , '</div>'].join('')
         }
     };
