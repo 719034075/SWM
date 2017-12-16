@@ -18,6 +18,14 @@ class Money(models.Model):
 
     class Meta:
         db_table = 'money'
+        permissions = (
+            ("view_money", "Can view the money"),
+            ("remove_money", "Can remove a money"),
+            ("modify_money", "Can modify a money"),
+            ("findOne_money", "Can find a money"),
+            ("findAllOfCondition_money", "Can find all money of condition"),
+            ("view_moneyForm", "Can view the money form")
+        )
 
     def __str__(self):
         return self.trading_account

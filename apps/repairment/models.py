@@ -16,6 +16,14 @@ class Repairment(models.Model):
 
     class Meta:
         db_table = 'repairment'
+        permissions = (
+            ("view_repairment", "Can view the repairment"),
+            ("remove_repairment", "Can remove a repairment"),
+            ("modify_repairment", "Can modify a repairment"),
+            ("findOne_repairment", "Can find a repairment"),
+            ("findAllOfCondition_repairment", "Can find all repairments of condition"),
+            ("view_repairmentForm", "Can view the repairment form")
+        )
 
     def __str__(self):
         return self.machine_id

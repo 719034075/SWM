@@ -17,6 +17,14 @@ class Appointment(models.Model):
 
     class Meta:
         db_table = 'appointment'
+        permissions = (
+            ("view_appointment", "Can view the appointment"),
+            ("remove_appointment", "Can remove an appointment"),
+            ("modify_appointment", "Can modify an appointment"),
+            ("findOne_appointment", "Can find an appointment"),
+            ("findAllOfCondition_appointment", "Can find all appointments of condition"),
+            ("view_appointmentForm", "Can view the appointment form")
+        )
 
     def __str__(self):
         return self.machine_id
