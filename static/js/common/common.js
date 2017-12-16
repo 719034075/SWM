@@ -198,7 +198,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
             type: 1,
             btn: ['保存', '取消'],
             shade: [0.5, '#FFF'],
-            offset: ['10%', '30%'],
+            offset: ['30%', '35%'],
             area: 'auto',
             zIndex: 19950924,
             yes: function (index) {

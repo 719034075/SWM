@@ -25,6 +25,10 @@ urlpatterns = [
     url(r'^student/', include('apps.student.urls')),
     url(r'^repair/', include('apps.repair.urls')),
     url(r'^washmachine/', include('apps.washmachine.urls')),
+    url(r'^appointment/', include('apps.appointment.urls')),
+    url(r'^money/', include('apps.money.urls')),
+    url(r'^repairment/', include('apps.repairment.urls')),
+
 ]
 #
 # if settings.DEBUG:

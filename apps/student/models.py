@@ -16,7 +16,6 @@ class StudentInformation(models.Model):
     dormitory_building_number = models.IntegerField('寝室楼号', null=True)
     balance = models.DecimalField('余额', max_digits=20, decimal_places=2, default=0.00)
     credit = models.IntegerField('信用分', default=100)
-    integral = models.IntegerField('积分', default=0)
 
     class Meta:
         db_table = 'student_information'

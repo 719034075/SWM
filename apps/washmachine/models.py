@@ -8,7 +8,8 @@ class WashMachine(models.Model):
         ('F', 'Free'),
         ('W', 'Work'),
         ('B', ' Breakdown'),
-        ('D', 'Dirty')
+        ('D', 'Dirty'),
+        ('A', 'Appointment')
     )
     machine_id = models.CharField('洗衣机编号', max_length=10)
     dormitory_building_number = models.IntegerField('寝室楼号')
