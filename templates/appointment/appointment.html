@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Appointment Manage{% endblock %}
+{% block content %}
+    <div class="admin-main">
+        <blockquote class="layui-elem-quote">
+            <a href="javascript:void(0);" class="layui-btn layui-btn-sm" id="reload">
+                <i class="fa fa-repeat"></i> 刷新重置
+            </a>
+        </blockquote>
+        <div class=" layui-form">
+            <table class="layui-table admin-table">
+                <thead>
+                <tr>
+                    <th style="width: 30px;"><input type="checkbox" lay-filter="allselector" lay-skin="primary"
+                                                    title=""></th>
+                    <th>洗衣机编号</th>
+                    <th>预约账号</th>
+                    <th>起始时间</th>
+                    <th>结束时间</th>
+                    <th>预约状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="table_content">
+                </tbody>
+            </table>
+        </div>
+        <div class="placepass"></div>
+        <div class="admin-table-page">
+            <div id="paged" class="page"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block templates_script %}
+    <script src="{% static 'js/washmachine/washmachine.js' %}"></script>
+    <script type="text/html" id="tpl">
+        <%# layui.each(d.data, function(index, item){ %>
+        <%# var start_time="-"; %>
+        <%# var end_time="-"; %>
+        <%# if(item.start_time){start_time=layui.common.date.datetimeFormat_3(item.start_time);} %>
+        <%# if(item.end_time){end_time=layui.common.date.datetimeFormat_3(item.end_time);} %>
+        <tr data-id="<% item.id %>">
+            <td><input type="checkbox" lay-skin="primary" title=""></td>
+            <td><% item.machine_id?item.machine_id:"-" %></td>
+            <td><% item.account?item.account:"-" %></td>
+            <td>
+                <% start_time %>
+            </td>
+            <td>
+                <% end_time %>
+            </td>
+            <td>
+                <%# if(!item.state){ %>
+                -
+                <%# }%>
+                <%# if(item.state==='A'){ %>
+                预约中
+                <%# }%>
+                <%# if(item.state==='E'){ %>
+                已完成
+                <%# }%>
+                <%# if(item.state==='C'){ %>
+                已取消
+                <%# }%>
+            </td>
+            <td>
+                {% if perms.washmachine.findOne_washmachine %}
+                    <a href="javascript:void(0);" data-opt="details"
+                       class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
+                {% endif %}
+            </td>
+        </tr>
+        <%# }); %>
+    </script>
+{% endblock %}

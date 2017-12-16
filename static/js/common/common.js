@@ -44,6 +44,19 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
             return datetimeType;
         },
         /**
+         * 时间戳转换成yyyy-MM-dd hh:mm:ss格式日期
+         * @param timeStamp
+         * @returns {string|*}
+         */
+        datetimeFormat_3: function (timeStamp) {
+            var that = this;
+            var datetimeType;
+            var date = new Date();
+            date.setTime(timeStamp);
+            datetimeType = date.getFullYear() + "-" + that.getMonth(date) + "-" + that.getDay(date) + ' ' + that.getHours(date) + ':' + that.getMinutes(date) + ':' + that.getSeconds(date);//yyyy-MM-dd hh:mm:ss格式日期
+            return datetimeType;
+        },
+        /**
          * 获取月份
          * @param date
          * @returns {*}
@@ -473,7 +486,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 , '<div>洗衣机编号：<% item.machine_id?item.machine_id:"-" %></div>'
                 , '<div>寝室楼号：<% item.dormitory_building_number?item.dormitory_building_number:"-" %></div>'
                 , '<div>运行状态：'
-                ,'<%# if(!item.state){ %>'
+                , '<%# if(!item.state){ %>'
                 , '-'
                 , '<%# }%>'
                 , '<%# if(item.state==="F"){ %>'

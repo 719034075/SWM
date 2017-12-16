@@ -1,5 +1,5 @@
 /**
- * Created by 71903 on 2017/12/11.
+ * Created by 71903 on 2017/12/16.
  */
 
 layui.config({
@@ -18,7 +18,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         close: '%>'
     });
     var pg = paging.init({
-        url: '/washmachine/findAllOfCondition/', //地址
+        url: '/appointment/findAllOfCondition/', //地址
         elem: '#table_content', //内容容器
         params: { //额外发送到服务端的参数
         },
@@ -28,7 +28,6 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         pageConfig: { //分页参数配置
             elem: 'paged', //分页容器
             pageSize: common.config.otherParams.defaultPageSize //分页大小
-
         },
         success: function () { //渲染成功的回调
         },
