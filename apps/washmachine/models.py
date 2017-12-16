@@ -5,11 +5,11 @@ from django.db import models
 
 class WashMachine(models.Model):
     STATE_CHOICES = (
-        ('F', 'Free'),
-        ('W', 'Work'),
-        ('B', ' Breakdown'),
-        ('D', 'Dirty'),
-        ('A', 'Appointment')
+        ('F', '空闲'),
+        ('W', '工作中'),
+        ('B', ' 故障'),
+        ('D', '待清晰'),
+        ('A', '预约中')
     )
     machine_id = models.CharField('洗衣机编号', max_length=10)
     dormitory_building_number = models.IntegerField('寝室楼号')
