@@ -431,6 +431,12 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'washmachine':
                     tpl = that.detailsTpl.washmachineDetailsTpl;
                     break;
+                case 'appointment':
+                    tpl = that.detailsTpl.appointmentDetailsTpl;
+                    break;
+                case 'repairment':
+                    tpl = that.detailsTpl.repairmentDetailsTpl;
+                    break;
                 default:
                     tpl = '详情模版选择错误';
                     break;
@@ -450,6 +456,12 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'washmachine':
                     title = '洗衣机详情';
                     break;
+                case 'appointment':
+                    title = '预约详情';
+                    break;
+                case 'repairment':
+                    title = '报修详情';
+                    break;
                 default:
                     title = '详情';
                     break;
@@ -468,7 +480,12 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'washmachine':
                     area = '400px';
                     break;
-
+                case 'appointment':
+                    area = '400px';
+                    break;
+                case 'repairment':
+                    area = '400px';
+                    break;
                 default:
                     area = '400px';
                     break;
@@ -480,7 +497,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
          * 对应模板
          */
         detailsTpl: {
-            //业务系统管理员详情模板
+            //洗衣机详情模板
             washmachineDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
                 , '<%# var item=d.data;%>'
                 , '<div>洗衣机编号：<% item.machine_id?item.machine_id:"-" %></div>'
@@ -500,6 +517,54 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 , '<%# }%>'
                 , '<%# if(item.state==="D"){ %>'
                 , '待清洁'
+                , '<%# }%></div>'
+                , '</div>'].join(''),
+            //预约详情模板
+            appointmentDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
+                , '<%# var item=d.data;%>'
+                , '<%# var start_time="-"; %>'
+                , '<%# var end_time="-"; %>'
+                , '<%# if(item.start_time){start_time=layui.common.date.datetimeFormat_3(item.start_time);} %>'
+                , '<%# if(item.end_time){end_time=layui.common.date.datetimeFormat_3(item.end_time);} %>'
+                , '<div>洗衣机编号：<% item.machine_id?item.machine_id:"-" %></div>'
+                , '<div>预约账号：<% item.account?item.account:"-" %></div>'
+                , '<div>起始时间：<% start_time %></div>'
+                , '<div>结束时间：<% end_time %></div>'
+                , '<div>预约状态：'
+                , '<%# if(!item.state){ %>'
+                , '-'
+                , '<%# }%>'
+                , '<%# if(item.state==="A"){ %>'
+                , '预约中'
+                , '<%# }%>'
+                , '<%# if(item.state==="E"){ %>'
+                , '已完成'
+                , '<%# }%>'
+                , '<%# if(item.state==="C"){ %>'
+                , '已取消'
+                , '<%# }%></div>'
+                , '</div>'].join(''),
+            //报修详情模板
+            repairmentDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
+                , '<%# var item=d.data;%>'
+                , '<%# var repair_time="-"; %>'
+                , '<%# if(item.repair_time){repair_time=layui.common.date.datetimeFormat_3(item.repair_time);} %>'
+                , '<div>洗衣机编号：<% item.machine_id?item.machine_id:"-" %></div>'
+                , '<div>报修账号：<% item.account?item.account:"-" %></div>'
+                , '<div>报修时间：<% repair_time %></div>'
+                , '<div>备注：<% item.remarks?item.remarks:"-" %></div>'
+                , '<div>报修状态：'
+                , '<%# if(!item.state){ %>'
+                , '-'
+                , '<%# }%>'
+                , '<%# if(item.state==="R"){ %>'
+                , '报修中'
+                , '<%# }%>'
+                , '<%# if(item.state==="E"){ %>'
+                , '已完成'
+                , '<%# }%>'
+                , '<%# if(item.state==="C"){ %>'
+                , '已取消'
                 , '<%# }%></div>'
                 , '</div>'].join('')
         }

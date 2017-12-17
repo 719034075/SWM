@@ -1,7 +1,6 @@
 /**
- * Created by 71903 on 2017/12/16.
+ * Created by 71903 on 2017/12/17.
  */
-
 layui.config({
     base: '/static/js/common/'
 });
@@ -18,7 +17,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         close: '%>'
     });
     var pg = paging.init({
-        url: '/appointment/findAllOfCondition/', //地址
+        url: '/repairment/findAllOfCondition/', //地址
         elem: '#table_content', //内容容器
         params: { //额外发送到服务端的参数
         },
@@ -58,11 +57,11 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         }
     });
 
-    //预约详情
+    //报修详情
     function details(id) {
         common.details.init({
             id: id,
-            tplType: 'appointment'
+            tplType: 'repairment'
         })
     }
 

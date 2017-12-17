@@ -9,7 +9,7 @@ class Appointment(models.Model):
         ('E', '已完成'),
         ('C', '已取消'),
     )
-    machine_id = models.IntegerField('洗衣机编号')
+    machine_id = models.CharField('洗衣机编号', max_length=10)
     account = models.CharField('预约账号', max_length=30)
     start_time = models.DateTimeField('起始时间', auto_now_add=True)
     end_time = models.DateTimeField('结束时间', auto_now_add=True)

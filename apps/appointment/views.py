@@ -1,5 +1,6 @@
 import datetime
-from django.contrib.auth.models import User
+import time
+from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 
 # Create your views here.
@@ -79,6 +80,8 @@ def modify_appointment(request):
 @csrf_exempt
 def findOne_appointment(request, id):
     appointment = get_object_or_404(Appointment, id=id)
+    appointment.start_time = time.mktime(appointment.start_time.timetuple())
+    appointment.end_time = time.mktime(appointment.end_time.timetuple())
     appointment.__dict__.pop('_state')
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
@@ -92,12 +95,13 @@ def findOne_appointment(request, id):
 def findAllOfCondition_appointment(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
+        Appointment.objects.order_by('-start_time')
         data = Appointment.objects.all()
         d = json.loads(str(request.body, encoding="utf-8"))
         account = user.username
         if 'machine_id' in d.keys():
             data = data.filter(machine_id=d['machine_id'])
-        if account is not None:
+        if account is not None and Group.objects.get(user=user) == Group.objects.get(name='U'):
             data = data.filter(account=account)
         if 'state' in d.keys():
             data = data.filter(state=d['state'])
@@ -124,6 +128,8 @@ def findAllOfCondition_appointment(request):
         data_list = []
         for element in data:
             element.__dict__.pop('_state')
+            element.start_time = time.mktime(element.start_time.timetuple())
+            element.end_time = time.mktime(element.end_time.timetuple())
             data_list.append(element.__dict__)
         response.data = data_list
         return JsonResponse(response.__dict__)
@@ -134,5 +140,3 @@ def findAllOfCondition_appointment(request):
 def view_appointment(request):
     return render(request,
                   'appointment/appointment.html')
-
-

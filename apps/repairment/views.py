@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+import time
+from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 
 # Create your views here.
@@ -43,6 +44,7 @@ def add_repairment(request):
 def findOne_repairment(request, id):
     repairment = get_object_or_404(Repairment, id=id)
     repairment.__dict__.pop('_state')
+    repairment.repair_time = time.mktime(repairment.repair_time.timetuple())
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
     response.data = repairment.__dict__
@@ -55,12 +57,13 @@ def findOne_repairment(request, id):
 def findAllOfCondition_repairment(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
+        Repairment.objects.order_by('-repair_time')
         data = Repairment.objects.all()
         d = json.loads(str(request.body, encoding="utf-8"))
         account = user.username
         if 'machine_id' in d.keys():
             data = data.filter(machine_id=d['machine_id'])
-        if account is not None:
+        if account is not None and Group.objects.get(user=user) == Group.objects.get(name='U'):
             data = data.filter(account=account)
         if 'state' in d.keys():
             data = data.filter(state=d['state'])
@@ -87,6 +90,7 @@ def findAllOfCondition_repairment(request):
         data_list = []
         for element in data:
             element.__dict__.pop('_state')
+            element.repair_time = time.mktime(element.repair_time.timetuple())
             data_list.append(element.__dict__)
         response.data = data_list
         return JsonResponse(response.__dict__)

@@ -33,7 +33,7 @@
     </div>
 {% endblock %}
 {% block templates_script %}
-    <script src="{% static 'js/washmachine/washmachine.js' %}"></script>
+    <script src="{% static 'js/appointment/appointment.js' %}"></script>
     <script type="text/html" id="tpl">
         <%# layui.each(d.data, function(index, item){ %>
         <%# var start_time="-"; %>
@@ -65,7 +65,7 @@
                 <%# }%>
             </td>
             <td>
-                {% if perms.washmachine.findOne_washmachine %}
+                {% if perms.appointment.findOne_appointment %}
                     <a href="javascript:void(0);" data-opt="details"
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}

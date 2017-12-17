@@ -26,6 +26,15 @@
                 {% if perms.washmachine.view_washmachine %}
                     <li class="layui-nav-item"><a href="{% url "view_washmachine" %}">洗衣机管理</a></li>
                 {% endif %}
+                {% if perms.appointment.view_appointment %}
+                    <li class="layui-nav-item"><a href="{% url "view_appointment" %}">预约管理</a></li>
+                {% endif %}
+                {% if perms.repairment.view_repairment %}
+                    <li class="layui-nav-item"><a href="{% url "view_repairment" %}">报修管理</a></li>
+                {% endif %}
+                {% if perms.money.view_money %}
+                    <li class="layui-nav-item"><a href="{% url "view_money" %}">交易管理</a></li>
+                {% endif %}
             {% endif %}
         </ul>
         <ul class="layui-nav layui-layout-right">

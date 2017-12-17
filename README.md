@@ -1,6 +1,12 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-17
+
++ add `appointment.html`
++ add `money.html`
++ add `repairment.html`
+
 ## 2017-12-16
 
 + add appointment 

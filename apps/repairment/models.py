@@ -9,8 +9,9 @@ class Repairment(models.Model):
         ('E', '已完成'),
         ('C', '已取消'),
     )
-    machine_id = models.IntegerField('洗衣机编号')
+    machine_id = models.CharField('洗衣机编号', max_length=10)
     account = models.CharField('报修账号', max_length=30)
+    repair_time = models.DateTimeField('报修时间', auto_now_add=True)
     remarks = models.CharField('备注', max_length=300)
     state = models.CharField('报修状态', max_length=1, choices=STATE_CHOICES)
 
