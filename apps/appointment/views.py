@@ -97,7 +97,7 @@ def findAllOfCondition_appointment(request):
         account = user.username
         if 'machine_id' in d.keys():
             data = data.filter(machine_id=d['machine_id'])
-        if 'account' in d.keys():
+        if account is not None:
             data = data.filter(account=account)
         if 'state' in d.keys():
             data = data.filter(state=d['state'])

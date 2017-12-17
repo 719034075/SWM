@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.db.migrations import state
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,6 +14,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from apps.money.models import Money
+from apps.student.models import StudentInformation
 from utils.ResponseBean import ResponseBean
 
 
@@ -20,79 +23,59 @@ from utils.ResponseBean import ResponseBean
 @csrf_exempt
 def add_money(request):
     if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        student = get_object_or_404(StudentInformation, user=user)
         d = json.loads(str(request.body, encoding="utf-8"))
-        machine_id = d['machine_id']
-        dormitory_building_number = d['dormitory_building_number']
-        state = 'F'
-        new_washmachine = WashMachine.objects.create(machine_id=machine_id,
-                                                     dormitory_building_number=dormitory_building_number,
-                                                     state=state)
-        new_washmachine.save()
+        trading_account = user.username
+        trading_amount = d['trading_amount']
+        balance = student.balance
+        transaction_type = d['transaction_type']
+        new_money = Money.objects.create(trading_account=trading_account,
+                                         trading_amount=trading_amount,
+                                         balance=balance,
+                                         transaction_type=transaction_type)
+        new_money.save()
         response = ResponseBean().get_success_instance()
-        response.message = '新建洗衣机成功。'
-        print(json.dumps(response.__dict__))
-        return JsonResponse(response.__dict__)
-    else:
-        response = ResponseBean().get_fail_instance()
-        response.message = '新建洗衣机失败。'
+        response.message = '新建现金交易记录成功。'
         return JsonResponse(response.__dict__)
 
 
-@permission_required('washmachine.remove_money')
+@permission_required('money.remove_money')
 @login_required
 @csrf_exempt
 def remove_money(request, id):
-    washmachine = get_object_or_404(WashMachine, id=id)
-    washmachine.delete()
+    money = get_object_or_404(Money, id=id)
+    money.delete()
     response = ResponseBean().get_success_instance()
-    response.message = '删除洗衣机成功。'
+    response.message = '删除现金交易记录成功。'
     return JsonResponse(response.__dict__)
 
 
-@permission_required('washmachine.modify_money')
-@login_required
-@csrf_exempt
-def modify_money(request):
-    if request.method == 'POST':
-        d = json.loads(str(request.body, encoding="utf-8"))
-        washmachine = get_object_or_404(WashMachine, id=d['id'])
-        if 'machine_id' in d.keys():
-            washmachine.machine_id = d['machine_id']
-        if 'dormitory_building_number' in d.keys():
-            washmachine.dormitory_building_number = d['dormitory_building_number']
-        if 'state' in d.keys():
-            washmachine.state = d['state']
-        washmachine.save()
-        response = ResponseBean().get_success_instance()
-        response.message = '修改洗衣机信息成功。'
-        return JsonResponse(response.__dict__)
-
-
-@permission_required('washmachine.findOne_money')
+@permission_required('money.findOne_money')
 @login_required
 @csrf_exempt
 def findOne_money(request, id):
-    washmachine = get_object_or_404(WashMachine, id=id)
-    washmachine.__dict__.pop('_state')
+    money = get_object_or_404(Money, id=id)
+    money.__dict__.pop('_state')
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
-    response.data = washmachine.__dict__
+    response.data = money.__dict__
     return JsonResponse(response.__dict__)
 
 
-@permission_required('washmachine.findAllOfCondition_money')
+@permission_required('money.findAllOfCondition_money')
 @login_required
 @csrf_exempt
 def findAllOfCondition_money(request):
     if request.method == 'POST':
-        data = WashMachine.objects.all()
+        user = User.objects.get(id=request.user.id)
+        data = Money.objects.all()
         d = json.loads(str(request.body, encoding="utf-8"))
-        if 'machine_id' in d.keys():
-            data = data.filter(machine_id=d['machine_id'])
-        if 'dormitory_building_number' in d.keys():
-            data = data.filter(dormitory_building_number=d['dormitory_building_number'])
-        if 'state' in d.keys():
-            data = data.filter(state=d['state'])
+        trading_account = user.username
+        if trading_account is not None:
+            data = data.filter(trading_account=trading_account)
+        if 'transaction_type' in d.keys():
+            data = data.filter(transaction_type=d['transaction_type'])
         if 'page_index' in d.keys():
             page_index = d['page_index']
         else:
@@ -121,15 +104,10 @@ def findAllOfCondition_money(request):
         return JsonResponse(response.__dict__)
 
 
-@permission_required('washmachine.view_money')
+@permission_required('money.view_money')
 @login_required
 def view_money(request):
     return render(request,
-                  'washmachine/washmachine.html')
+                  'money/money.html')
 
 
-@permission_required('washmachine.view_moneyForm')
-@login_required
-def view_moneyForm(request):
-    return render(request,
-                  'washmachine/washmachineForm.html')
