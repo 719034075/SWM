@@ -29,10 +29,6 @@ def add_washmachine(request):
         response.message = '新建洗衣机成功。'
         print(json.dumps(response.__dict__))
         return JsonResponse(response.__dict__)
-    else:
-        response = ResponseBean().get_fail_instance()
-        response.message = '新建洗衣机失败。'
-        return JsonResponse(response.__dict__)
 
 
 @permission_required('washmachine.remove_washmachine')

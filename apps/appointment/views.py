@@ -1,3 +1,5 @@
+import datetime
+from django.contrib.auth.models import User
 from django.shortcuts import render
 
 # Create your views here.
@@ -11,7 +13,7 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
-from apps.washmachine.models import WashMachine
+from apps.appointment.models import Appointment
 from utils.ResponseBean import ResponseBean
 
 
@@ -21,20 +23,20 @@ from utils.ResponseBean import ResponseBean
 def add_appointment(request):
     if request.method == 'POST':
         d = json.loads(str(request.body, encoding="utf-8"))
+        user = User.objects.get(id=request.user.id)
         machine_id = d['machine_id']
-        dormitory_building_number = d['dormitory_building_number']
-        state = 'F'
-        new_washmachine = WashMachine.objects.create(machine_id=machine_id,
-                                                     dormitory_building_number=dormitory_building_number,
+        account = user.username
+        start_time = datetime.datetime.now()
+        end_time = start_time + datetime.timedelta(minutes=+10)
+        state = 'A'
+        new_appointment = Appointment.objects.create(machine_id=machine_id,
+                                                     account=account,
+                                                     start_time=start_time,
+                                                     end_time=end_time,
                                                      state=state)
-        new_washmachine.save()
+        new_appointment.save()
         response = ResponseBean().get_success_instance()
-        response.message = '新建洗衣机成功。'
-        print(json.dumps(response.__dict__))
-        return JsonResponse(response.__dict__)
-    else:
-        response = ResponseBean().get_fail_instance()
-        response.message = '新建洗衣机失败。'
+        response.message = '预约成功。'
         return JsonResponse(response.__dict__)
 
 
@@ -42,10 +44,10 @@ def add_appointment(request):
 @login_required
 @csrf_exempt
 def remove_appointment(request, id):
-    washmachine = get_object_or_404(WashMachine, id=id)
-    washmachine.delete()
+    appointment = get_object_or_404(Appointment, id=id)
+    appointment.delete()
     response = ResponseBean().get_success_instance()
-    response.message = '删除洗衣机成功。'
+    response.message = '删除预约记录成功。'
     return JsonResponse(response.__dict__)
 
 
@@ -55,16 +57,20 @@ def remove_appointment(request, id):
 def modify_appointment(request):
     if request.method == 'POST':
         d = json.loads(str(request.body, encoding="utf-8"))
-        washmachine = get_object_or_404(WashMachine, id=d['id'])
+        appointment = get_object_or_404(Appointment, id=d['id'])
         if 'machine_id' in d.keys():
-            washmachine.machine_id = d['machine_id']
-        if 'dormitory_building_number' in d.keys():
-            washmachine.dormitory_building_number = d['dormitory_building_number']
+            appointment.machine_id = d['machine_id']
+        if 'account' in d.keys():
+            appointment.account = d['account']
+        if 'start_time' in d.keys():
+            appointment.start_time = d['start_time']
+        if 'end_time' in d.keys():
+            appointment.end_time = d['end_time']
         if 'state' in d.keys():
-            washmachine.state = d['state']
-        washmachine.save()
+            appointment.state = d['state']
+        appointment.save()
         response = ResponseBean().get_success_instance()
-        response.message = '修改洗衣机信息成功。'
+        response.message = '修改预约成功。'
         return JsonResponse(response.__dict__)
 
 
@@ -72,11 +78,11 @@ def modify_appointment(request):
 @login_required
 @csrf_exempt
 def findOne_appointment(request, id):
-    washmachine = get_object_or_404(WashMachine, id=id)
-    washmachine.__dict__.pop('_state')
+    appointment = get_object_or_404(Appointment, id=id)
+    appointment.__dict__.pop('_state')
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
-    response.data = washmachine.__dict__
+    response.data = appointment.__dict__
     return JsonResponse(response.__dict__)
 
 
@@ -85,12 +91,14 @@ def findOne_appointment(request, id):
 @csrf_exempt
 def findAllOfCondition_appointment(request):
     if request.method == 'POST':
-        data = WashMachine.objects.all()
+        user = User.objects.get(id=request.user.id)
+        data = Appointment.objects.all()
         d = json.loads(str(request.body, encoding="utf-8"))
+        account = user.username
         if 'machine_id' in d.keys():
             data = data.filter(machine_id=d['machine_id'])
-        if 'dormitory_building_number' in d.keys():
-            data = data.filter(dormitory_building_number=d['dormitory_building_number'])
+        if 'account' in d.keys():
+            data = data.filter(account=account)
         if 'state' in d.keys():
             data = data.filter(state=d['state'])
         if 'page_index' in d.keys():
@@ -125,11 +133,6 @@ def findAllOfCondition_appointment(request):
 @login_required
 def view_appointment(request):
     return render(request,
-                  'washmachine/washmachine.html')
+                  'appointment/appointment.html')
 
 
-@permission_required('appointment.view_appointmentForm')
-@login_required
-def view_appointmentForm(request):
-    return render(request,
-                  'washmachine/washmachineForm.html')

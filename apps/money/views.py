@@ -11,7 +11,7 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
-from apps.washmachine.models import WashMachine
+from apps.money.models import Money
 from utils.ResponseBean import ResponseBean
 
 
