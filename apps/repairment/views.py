@@ -129,5 +129,5 @@ def complete_repairment(request, id):
     repairment.save()
     washmachine.save()
     response = ResponseBean().get_success_instance()
-    response.message = '维修成功。'
+    response.message = '处理成功。'
     return JsonResponse(response.__dict__)

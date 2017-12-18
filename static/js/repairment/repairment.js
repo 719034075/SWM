@@ -69,9 +69,9 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         })
     }
 
-        //已维修，结束报修
+        //已处理，结束异常处理
     function complete(id) {
-        var confirmindex = layer.confirm('确定已经维修该洗衣机了吗？', {
+        var confirmindex = layer.confirm('确定已经处理异常了吗？', {
             icon: 7,
             btn: ['确定', '取消']
         }, function () {

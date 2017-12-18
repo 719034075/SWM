@@ -15,11 +15,11 @@
                     <th style="width: 30px;"><input type="checkbox" lay-filter="allselector" lay-skin="primary"
                                                     title=""></th>
                     <th>洗衣机编号</th>
-                    <th>报修账号</th>
-                    <th>报修时间</th>
-                    <th>维修账号</th>
-                    <th>维修时间</th>
-                    <th>报修状态</th>
+                    <th>提交异常账号</th>
+                    <th>提交异常时间</th>
+                    <th>处理异常账号</th>
+                    <th>处理异常时间</th>
+                    <th>异常处理状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -55,6 +55,9 @@
                 <%# if(item.state==='R'){ %>
                 <span style="color:red;">报修中</span>
                 <%# }%>
+                <%# if(item.state==='W'){ %>
+                <span style="color:red;">待清洗</span>
+                <%# }%>
                 <%# if(item.state==='E'){ %>
                 已完成
                 <%# }%>
@@ -68,9 +71,9 @@
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}
                 {% if perms.repairment.complete_repairment %}
-                    <%# if(item.state==='R'){ %>
+                    <%# if(item.state==='R'||item.state==='W'){ %>
                     <a href="javascript:void(0);" data-opt="complete"
-                       class="layui-btn layui-btn-warm layui-btn-xs">维修</a>
+                       class="layui-btn layui-btn-warm layui-btn-xs">处理异常</a>
                     <%# }%>
                 {% endif %}
             </td>
