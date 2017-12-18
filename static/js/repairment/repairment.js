@@ -53,15 +53,19 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 $that.children('td:last-child').children('a[data-opt=details]').on('click', function () {
                     details($that.data('id'));
                 });
-                   //绑定所有已维修按钮事件
+                //绑定所有处理异常按钮事件
                 $that.children('td:last-child').children('a[data-opt=complete]').on('click', function () {
                     complete($that.data('id'));
+                });
+                //绑定所有撤回异常按钮事件
+                $that.children('td:last-child').children('a[data-opt=cancel]').on('click', function () {
+                    cancel($that.data('id'));
                 });
             });
         }
     });
 
-    //报修详情
+    //异常详情
     function details(id) {
         common.details.init({
             id: id,
@@ -69,7 +73,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         })
     }
 
-        //已处理，结束异常处理
+    //已处理，结束异常处理
     function complete(id) {
         var confirmindex = layer.confirm('确定已经处理异常了吗？', {
             icon: 7,
@@ -78,6 +82,26 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             layer.close(confirmindex);
             var loadindex = layer.load(2);
             axios.get('/repairment/complete/' + id + '/')
+                .then(function (response) {
+                    layer.close(loadindex);
+                    common.responseMessage({pg: pg, response: response.data});
+                })
+                .catch(function (error) {
+                    console.error(error)
+                });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    }
+
+        //已处理，结束异常处理
+    function cancel(id) {
+        var confirmindex = layer.confirm('确定撤回异常了吗？', {
+            icon: 7,
+            btn: ['确定', '取消']
+        }, function () {
+            layer.close(confirmindex);
+            var loadindex = layer.load(2);
+            axios.get('/repairment/cancel/' + id + '/')
                 .then(function (response) {
                     layer.close(loadindex);
                     common.responseMessage({pg: pg, response: response.data});

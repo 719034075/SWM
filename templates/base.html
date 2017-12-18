@@ -25,7 +25,7 @@
                     <li class="layui-nav-item"><a href="{% url "view_appointment" %}">我的预约</a></li>
                 {% endif %}
                 {% if perms.repairment.view_repairment %}
-                    <li class="layui-nav-item"><a href="{% url "view_repairment" %}">我的报修</a></li>
+                    <li class="layui-nav-item"><a href="{% url "view_repairment" %}">我提交的异常</a></li>
                 {% endif %}
                 {% if perms.money.view_money %}
                     <li class="layui-nav-item"><a href="{% url "view_money" %}">我的交易</a></li>
@@ -42,7 +42,7 @@
                     <li class="layui-nav-item"><a href="{% url "view_appointment" %}">预约管理</a></li>
                 {% endif %}
                 {% if perms.repairment.view_repairment %}
-                    <li class="layui-nav-item"><a href="{% url "view_repairment" %}">报修管理</a></li>
+                    <li class="layui-nav-item"><a href="{% url "view_repairment" %}">异常管理</a></li>
                 {% endif %}
                 {% if perms.money.view_money %}
                     <li class="layui-nav-item"><a href="{% url "view_money" %}">交易管理</a></li>

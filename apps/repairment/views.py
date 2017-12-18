@@ -19,7 +19,6 @@ from apps.repairment.models import Repairment
 from apps.washmachine.models import WashMachine
 from utils.ResponseBean import ResponseBean
 
-
 @permission_required('repairment.add_repairment')
 @login_required
 @csrf_exempt
@@ -27,19 +26,26 @@ def add_repairment(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
         d = json.loads(str(request.body, encoding="utf-8"))
-        machine_id = d['machine_id']
+        washmachine = get_object_or_404(WashMachine, id=d['id'])
+        machine_id = washmachine.machine_id
         repair_account = user.username
+        washmachine_state = d['state']
         remarks = d['remarks']
-        state = 'R'
+        if washmachine_state == 'B':
+            washmachine.state = 'B'
+            state = 'R'
+        else:
+            washmachine.state = 'D'
+            state = 'W'
         new_repairment = Repairment.objects.create(machine_id=machine_id,
                                                    repair_account=repair_account,
                                                    remarks=remarks,
                                                    state=state)
+        washmachine.save()
         new_repairment.save()
         response = ResponseBean().get_success_instance()
-        response.message = '报修成功。'
+        response.message = '提交异常成功。'
         return JsonResponse(response.__dict__)
-
 
 @permission_required('repairment.findOne_repairment')
 @login_required
@@ -47,8 +53,10 @@ def add_repairment(request):
 def findOne_repairment(request, id):
     repairment = get_object_or_404(Repairment, id=id)
     repairment.__dict__.pop('_state')
-    repairment.repair_time = time.mktime(repairment.repair_time.timetuple())*1000
-    repairment.complete_time = time.mktime(repairment.complete_time.timetuple())*1000
+    if repairment.repair_time:
+        repairment.repair_time = time.mktime(repairment.repair_time.timetuple()) * 1000
+    if repairment.complete_time:
+        repairment.complete_time = time.mktime(repairment.complete_time.timetuple()) * 1000
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
     response.data = repairment.__dict__
@@ -61,8 +69,7 @@ def findOne_repairment(request, id):
 def findAllOfCondition_repairment(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
-        Repairment.objects.order_by('-repair_time')
-        data = Repairment.objects.all()
+        data = Repairment.objects.order_by('-repair_time')
         d = json.loads(str(request.body, encoding="utf-8"))
         repair_account = user.username
         if 'machine_id' in d.keys():
@@ -94,8 +101,10 @@ def findAllOfCondition_repairment(request):
         data_list = []
         for element in data:
             element.__dict__.pop('_state')
-            element.repair_time = time.mktime(element.repair_time.timetuple())*1000
-            element.complete_time = time.mktime(element.complete_time.timetuple())*1000
+            if element.repair_time:
+                element.repair_time = time.mktime(element.repair_time.timetuple()) * 1000
+            if element.complete_time:
+                element.complete_time = time.mktime(element.complete_time.timetuple()) * 1000
             data_list.append(element.__dict__)
         response.data = data_list
         return JsonResponse(response.__dict__)
@@ -130,4 +139,18 @@ def complete_repairment(request, id):
     washmachine.save()
     response = ResponseBean().get_success_instance()
     response.message = '处理成功。'
+    return JsonResponse(response.__dict__)
+
+
+@permission_required('repairment.cancel_repairment')
+@login_required
+def cancel_repairment(request, id):
+    repairment = get_object_or_404(Repairment, id=id)
+    washmachine = get_object_or_404(WashMachine, machine_id=repairment.machine_id)
+    repairment.state = 'C'
+    washmachine.state = 'F'
+    repairment.save()
+    washmachine.save()
+    response = ResponseBean().get_success_instance()
+    response.message = '取消成功。'
     return JsonResponse(response.__dict__)

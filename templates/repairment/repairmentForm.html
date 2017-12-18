@@ -1,0 +1,24 @@
+<div style="margin: 15px;">
+    <form class="layui-form" id="repairment">
+        <div class="layui-form-item">
+            <label class="layui-form-label label-width">异常类型</label>
+            <div class="layui-input-inline">
+                <select name="state" lay-verify="required">
+                    <option value=""></option>
+                    <option value="B">故障</option>
+                    <option value="D">待清洗</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red">*</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-width">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" name="remarks" required lay-verify="required" placeholder="请填写备注" autocomplete="off"
+                          class="layui-input" v-model="remarks">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red">*</div>
+        </div>
+        <button lay-filter="edit" lay-submit style="display: none;"></button>
+    </form>
+</div>

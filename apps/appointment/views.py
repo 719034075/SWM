@@ -96,8 +96,7 @@ def findOne_appointment(request, id):
 def findAllOfCondition_appointment(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
-        Appointment.objects.order_by('-start_time')
-        data = Appointment.objects.all()
+        data = Appointment.objects.order_by('-start_time')
         d = json.loads(str(request.body, encoding="utf-8"))
         account = user.username
         if 'machine_id' in d.keys():

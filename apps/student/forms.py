@@ -9,7 +9,9 @@ class StudentInformationEditForm(forms.ModelForm):
     gender = forms.CharField(widget=forms.Select(choices=StudentInformation.GENDER_CHOICES))
     mobile_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'layui-input'}))
     dormitory_building_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'layui-input'}))
+    balance = forms.CharField(widget=forms.NumberInput(attrs={'class': 'layui-input', 'readonly': 'readonly'}))
+    credit = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'layui-input', 'readonly': 'readonly'}))
 
     class Meta:
         model = StudentInformation
-        exclude = ['user', 'balance', 'credit', 'integral']
+        exclude = ['user',]

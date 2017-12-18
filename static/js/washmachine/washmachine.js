@@ -55,13 +55,17 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 $that.children('td:last-child').children('a[data-opt=details]').on('click', function () {
                     details($that.data('id'));
                 });
-                 //绑定所有编辑按钮事件
-                $that.children('td:last-child').children('a[data-opt=edit]').on('click', function() {
+                //绑定所有编辑按钮事件
+                $that.children('td:last-child').children('a[data-opt=edit]').on('click', function () {
                     edit($that.data('id'));
                 });
                 //绑定所有删除按钮事件
                 $that.children('td:last-child').children('a[data-opt=delete]').on('click', function () {
                     deleteWashmachine($that.data('id'));
+                });
+                //绑定所有提交异常按钮事件
+                $that.children('td:last-child').children('a[data-opt=addRepairment]').on('click', function () {
+                    addRepairment($that.data('id'));
                 });
             });
         }
@@ -94,32 +98,62 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         })
     });
 
+    //提交异常信息
+    function addRepairment(id) {
+        var repairmentAdd = common.popUp.init({
+            boxUrl: '/repairment/repairmentForm/',
+            tplType: 'repairment',
+            popType: 'add',
+            id: id,
+            success: function (layero, index) {
+                // var repairmentmentVue = new Vue({
+                //     el: '#repairment',
+                //     data: {remarks: ''}
+                // });
+                form.render();
+                form.on('submit(edit)', function (data) {
+                    data.field.id = id;
+                    axios.post('/repairment/add/', data.field)
+                        .then(function (response) {
+                            common.responseMessage({pg: pg, response: response.data});
+                            repairmentAdd.config.box = -1;
+                            layer.close(index);
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                    return false;
+                });
+            }
+        });
+    }
+
     //洗衣机详情
     function details(id) {
         common.details.init({
-            id:id,
-            tplType:'washmachine'
+            id: id,
+            tplType: 'washmachine'
         })
     }
 
-        function edit(id){
+    //编辑洗衣机信息
+    function edit(id) {
 
-        var washmachineEdit=common.popUp.init({
-            boxUrl:'/washmachine/washmachineForm/',
-            tplType:'washmachine',
-            popType:'edit',
-            id:id,
-            success:function(layero, index) {
+        var washmachineEdit = common.popUp.init({
+            boxUrl: '/washmachine/washmachineForm/',
+            tplType: 'washmachine',
+            popType: 'edit',
+            id: id,
+            success: function (layero, index) {
                 var washmachineVue = new Vue({
                     el: '#washmachine',
                     data: washmachineEdit.config.dataInfo
                 });
-                form.render();
-                form.on('submit(edit)', function(data) {
-                    data.field.id=id;
-                    axios.post('/washmachine/modify/',data.field)
+                form.on('submit(edit)', function (data) {
+                    data.field.id = id;
+                    axios.post('/washmachine/modify/', data.field)
                         .then(function (response) {
-                            common.responseMessage({pg:pg,response:response.data});
+                            common.responseMessage({pg: pg, response: response.data});
                             washmachineEdit.config.box = -1;
                             layer.close(index);
                         })

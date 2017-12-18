@@ -71,8 +71,7 @@ def findOne_money(request, id):
 def findAllOfCondition_money(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
-        Money.objects.order_by('-transaction_time')
-        data = Money.objects.all()
+        data =Money.objects.order_by('-transaction_time')
         d = json.loads(str(request.body, encoding="utf-8"))
         trading_account = user.username
         if trading_account is not None and Group.objects.get(user=user) == Group.objects.get(name='U'):

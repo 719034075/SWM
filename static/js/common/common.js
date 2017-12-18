@@ -321,6 +321,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'washmachine':
                     area = '600px';
                     break;
+                case 'repairment':
+                    area = ['600px','300px'];
+                    break;
 
             }
             return area;
@@ -335,6 +338,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
             switch (tplType) {
                 case 'washmachine':
                     title = '洗衣机';
+                    break;
+                case 'repairment':
+                    title = '异常';
                     break;
             }
             return title;
@@ -571,7 +577,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 , '-'
                 , '<%# }%>'
                 , '<%# if(item.state==="R"){ %>'
-                , '报修中'
+                , '待修理'
                 , '<%# }%>'
                 , '<%# if(item.state==="W"){ %>'
                 , '待清洗'

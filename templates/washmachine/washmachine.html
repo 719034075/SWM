@@ -65,6 +65,12 @@
                     <a href="javascript:void(0);" data-opt="details"
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}
+                {% if perms.repairment.view_repairmentForm and perms.repairment.add_repairment %}
+                    <%# if(item.state!=='B'&&item.state!=='D'){ %>
+                    <a href="javascript:void(0);" data-opt="addRepairment"
+                       class="layui-btn layui-btn-warm layui-btn-xs">提交异常</a>
+                    <%# }%>
+                {% endif %}
                 {% if perms.washmachine.view_washmachineForm and perms.washmachine.modify_washmachine %}
                     <a href="javascript:void(0);" data-opt="edit" class="layui-btn layui-btn-xs">编辑</a>
                 {% endif %}

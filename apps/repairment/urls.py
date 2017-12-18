@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^findOne/(?P<id>\d+)/$', views.findOne_repairment, name='findOne_repairment'),
     url(r'^findAllOfCondition/$', views.findAllOfCondition_repairment, name='findAllOfCondition_repairment'),
     url(r'^repairmentForm/$', views.view_repairmentForm, name='view_repairmentForm'),
-    url(r'^complete/(?P<id>\d+)/$', views.complete_repairment, name='complete_repairment')
+    url(r'^complete/(?P<id>\d+)/$', views.complete_repairment, name='complete_repairment'),
+    url(r'^cancel/(?P<id>\d+)/$', views.cancel_repairment, name='cancel_repairment'),
+
 ]

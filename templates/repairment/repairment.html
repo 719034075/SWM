@@ -53,7 +53,7 @@
                 -
                 <%# }%>
                 <%# if(item.state==='R'){ %>
-                <span style="color:red;">报修中</span>
+                <span style="color:red;">待修理</span>
                 <%# }%>
                 <%# if(item.state==='W'){ %>
                 <span style="color:red;">待清洗</span>
@@ -69,6 +69,12 @@
                 {% if perms.repairment.findOne_repairment %}
                     <a href="javascript:void(0);" data-opt="details"
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
+                {% endif %}
+                {% if perms.repairment.cancel_repairment %}
+                    <%# if(item.state==='R'||item.state==='W'){ %>
+                    <a href="javascript:void(0);" data-opt="cancel"
+                       class="layui-btn layui-btn-danger layui-btn-xs">撤回异常</a>
+                    <%# }%>
                 {% endif %}
                 {% if perms.repairment.complete_repairment %}
                     <%# if(item.state==='R'||item.state==='W'){ %>

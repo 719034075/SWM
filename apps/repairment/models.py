@@ -22,12 +22,11 @@ class Repairment(models.Model):
         db_table = 'repairment'
         permissions = (
             ("view_repairment", "Can view the repairment"),
-            ("remove_repairment", "Can remove a repairment"),
-            ("modify_repairment", "Can modify a repairment"),
             ("findOne_repairment", "Can find a repairment"),
             ("findAllOfCondition_repairment", "Can find all repairments of condition"),
             ("view_repairmentForm", "Can view the repairment form"),
-            ("complete_repairment", "Can be sure that complete the repairment")
+            ("complete_repairment", "Can be sure that complete the repairment"),
+            ("cancel_repairment", "Can cancel the repairment")
         )
 
     def __str__(self):
