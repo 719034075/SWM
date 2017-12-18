@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
+from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
 from apps.appointment.models import Appointment

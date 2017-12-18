@@ -17,6 +17,8 @@
                     <th>洗衣机编号</th>
                     <th>报修账号</th>
                     <th>报修时间</th>
+                    <th>维修账号</th>
+                    <th>维修时间</th>
                     <th>报修状态</th>
                     <th>操作</th>
                 </tr>
@@ -36,18 +38,22 @@
     <script type="text/html" id="tpl">
         <%# layui.each(d.data, function(index, item){ %>
         <%# var repair_time="-"; %>
+        <%# var complete_time="-"; %>
         <%# if(item.repair_time){repair_time=layui.common.date.datetimeFormat_3(item.repair_time);} %>
+        <%# if(item.complete_time){complete_time=layui.common.date.datetimeFormat_3(item.complete_time);} %>
         <tr data-id="<% item.id %>">
             <td><input type="checkbox" lay-skin="primary" title=""></td>
             <td><% item.machine_id?item.machine_id:"-" %></td>
-            <td><% item.account?item.account:"-" %></td>
+            <td><% item.repair_account?item.repair_account:"-" %></td>
             <td><% repair_time %></td>
+            <td><% item.complete_account?item.complete_account:"-" %></td>
+            <td><% complete_time %></td>
             <td>
                 <%# if(!item.state){ %>
                 -
                 <%# }%>
                 <%# if(item.state==='R'){ %>
-                报修中
+                <span style="color:red;">报修中</span>
                 <%# }%>
                 <%# if(item.state==='E'){ %>
                 已完成
@@ -60,6 +66,12 @@
                 {% if perms.repairment.findOne_repairment %}
                     <a href="javascript:void(0);" data-opt="details"
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
+                {% endif %}
+                {% if perms.repairment.complete_repairment %}
+                    <%# if(item.state==='R'){ %>
+                    <a href="javascript:void(0);" data-opt="complete"
+                       class="layui-btn layui-btn-warm layui-btn-xs">维修</a>
+                    <%# }%>
                 {% endif %}
             </td>
         </tr>

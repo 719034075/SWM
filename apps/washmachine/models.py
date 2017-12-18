@@ -8,7 +8,7 @@ class WashMachine(models.Model):
         ('F', '空闲'),
         ('W', '工作中'),
         ('B', ' 故障'),
-        ('D', '待清晰'),
+        ('D', '待清洗'),
         ('A', '预约中')
     )
     machine_id = models.CharField('洗衣机编号', max_length=10)

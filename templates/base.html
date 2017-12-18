@@ -18,6 +18,18 @@
                 {% if perms.student.view_student_dashboard %}
                     <li class="layui-nav-item"><a href="{% url "view_student_dashboard" %}">首页</a></li>
                 {% endif %}
+                {% if perms.washmachine.view_washmachine %}
+                    <li class="layui-nav-item"><a href="{% url "view_washmachine" %}">洗衣机</a></li>
+                {% endif %}
+                {% if perms.appointment.view_appointment %}
+                    <li class="layui-nav-item"><a href="{% url "view_appointment" %}">我的预约</a></li>
+                {% endif %}
+                {% if perms.repairment.view_repairment %}
+                    <li class="layui-nav-item"><a href="{% url "view_repairment" %}">我的报修</a></li>
+                {% endif %}
+                {% if perms.money.view_money %}
+                    <li class="layui-nav-item"><a href="{% url "view_money" %}">我的交易</a></li>
+                {% endif %}
             {% endif %}
             {% if perms.repair %}
                 {% if perms.repair.view_repair_dashboard %}

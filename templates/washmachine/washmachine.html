@@ -54,7 +54,7 @@
                 工作中
                 <%# }%>
                 <%# if(item.state==='B'){ %>
-                故障
+                <span style="color:red;">故障</span>
                 <%# }%>
                 <%# if(item.state==='D'){ %>
                 待清洁
@@ -62,13 +62,15 @@
             </td>
             <td>
                 {% if perms.washmachine.findOne_washmachine %}
-                    <a href="javascript:void(0);" data-opt="details" class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
+                    <a href="javascript:void(0);" data-opt="details"
+                       class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}
                 {% if perms.washmachine.view_washmachineForm and perms.washmachine.modify_washmachine %}
                     <a href="javascript:void(0);" data-opt="edit" class="layui-btn layui-btn-xs">编辑</a>
                 {% endif %}
                 {% if perms.washmachine.remove_washmachine %}
-                    <a href="javascript:void(0);" data-opt="delete" class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
+                    <a href="javascript:void(0);" data-opt="delete"
+                       class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
                 {% endif %}
             </td>
         </tr>
