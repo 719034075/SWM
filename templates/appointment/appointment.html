@@ -69,6 +69,12 @@
                     <a href="javascript:void(0);" data-opt="details"
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}
+                {% if perms.appointment.cancel_appointment %}
+                    <%# if(item.state==='A'){ %>
+                    <a href="javascript:void(0);" data-opt="cancel"
+                       class="layui-btn layui-btn-danger layui-btn-xs">撤回预约</a>
+                    <%# }%>
+                {% endif %}
             </td>
         </tr>
         <%# }); %>

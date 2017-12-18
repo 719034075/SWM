@@ -93,7 +93,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         });
     }
 
-        //已处理，结束异常处理
+    //撤销异常
     function cancel(id) {
         var confirmindex = layer.confirm('确定撤回异常了吗？', {
             icon: 7,

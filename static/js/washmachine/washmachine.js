@@ -55,6 +55,10 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 $that.children('td:last-child').children('a[data-opt=details]').on('click', function () {
                     details($that.data('id'));
                 });
+                //绑定所有详情按钮事件
+                $that.children('td:last-child').children('a[data-opt=appointment]').on('click', function () {
+                    appointment($that.data('id'));
+                });
                 //绑定所有编辑按钮事件
                 $that.children('td:last-child').children('a[data-opt=edit]').on('click', function () {
                     edit($that.data('id'));
@@ -97,6 +101,26 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             }
         })
     });
+
+    //预约
+ function appointment(id) {
+        var confirmindex = layer.confirm('确定预约该台洗衣机吗？', {
+            icon: 7,
+            btn: ['确定', '取消']
+        }, function () {
+            layer.close(confirmindex);
+            var loadindex = layer.load(2);
+            axios.get('/appointment/add/' + id + '/')
+                .then(function (response) {
+                    layer.close(loadindex);
+                    common.responseMessage({pg: pg, response: response.data});
+                })
+                .catch(function (error) {
+                    console.error(error)
+                });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    }
 
     //提交异常信息
     function addRepairment(id) {

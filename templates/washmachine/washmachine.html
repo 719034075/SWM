@@ -53,6 +53,9 @@
                 <%# if(item.state==='W'){ %>
                 工作中
                 <%# }%>
+                <%# if(item.state==='A'){ %>
+                预约中
+                <%# }%>
                 <%# if(item.state==='B'){ %>
                 <span style="color:red;">故障</span>
                 <%# }%>
@@ -64,6 +67,12 @@
                 {% if perms.washmachine.findOne_washmachine %}
                     <a href="javascript:void(0);" data-opt="details"
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
+                {% endif %}
+                {% if perms.appointment.add_appointment %}
+                    <%# if(item.state!=='B'&&item.state!=='D'&&item.state!=='A'){ %>
+                    <a href="javascript:void(0);" data-opt="appointment"
+                       class="layui-btn layui-btn-xs">预约</a>
+                    <%# }%>
                 {% endif %}
                 {% if perms.repairment.view_repairmentForm and perms.repairment.add_repairment %}
                     <%# if(item.state!=='B'&&item.state!=='D'){ %>

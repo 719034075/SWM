@@ -54,6 +54,10 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 $that.children('td:last-child').children('a[data-opt=details]').on('click', function () {
                     details($that.data('id'));
                 });
+                //绑定所有撤回异常按钮事件
+                $that.children('td:last-child').children('a[data-opt=cancel]').on('click', function () {
+                    cancel($that.data('id'));
+                });
             });
         }
     });
@@ -64,6 +68,26 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             id: id,
             tplType: 'appointment'
         })
+    }
+
+    //撤销预约
+    function cancel(id) {
+        var confirmindex = layer.confirm('确定撤回预约吗？', {
+            icon: 7,
+            btn: ['确定', '取消']
+        }, function () {
+            layer.close(confirmindex);
+            var loadindex = layer.load(2);
+            axios.get('/appointment/cancel/' + id + '/')
+                .then(function (response) {
+                    layer.close(loadindex);
+                    common.responseMessage({pg: pg, response: response.data});
+                })
+                .catch(function (error) {
+                    console.error(error)
+                });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
     }
 
     //刷新

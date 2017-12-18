@@ -16,30 +16,32 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
 from apps.appointment.models import Appointment
+from apps.washmachine.models import WashMachine
 from utils.ResponseBean import ResponseBean
 
 
 @permission_required('appointment.add_appointment')
 @login_required
 @csrf_exempt
-def add_appointment(request):
-    if request.method == 'POST':
-        d = json.loads(str(request.body, encoding="utf-8"))
-        user = User.objects.get(id=request.user.id)
-        machine_id = d['machine_id']
-        account = user.username
-        start_time = datetime.datetime.now()
-        end_time = start_time + datetime.timedelta(minutes=+10)
-        state = 'A'
-        new_appointment = Appointment.objects.create(machine_id=machine_id,
-                                                     account=account,
-                                                     start_time=start_time,
-                                                     end_time=end_time,
-                                                     state=state)
-        new_appointment.save()
-        response = ResponseBean().get_success_instance()
-        response.message = '预约成功。'
-        return JsonResponse(response.__dict__)
+def add_appointment(request, id):
+    washmachine = get_object_or_404(WashMachine, id=id)
+    user = User.objects.get(id=request.user.id)
+    machine_id = washmachine.machine_id
+    account = user.username
+    start_time = datetime.datetime.now()
+    end_time = start_time + datetime.timedelta(minutes=+10)
+    washmachine.state = 'A'
+    state = 'A'
+    new_appointment = Appointment.objects.create(machine_id=machine_id,
+                                                 account=account,
+                                                 start_time=start_time,
+                                                 end_time=end_time,
+                                                 state=state)
+    washmachine.save()
+    new_appointment.save()
+    response = ResponseBean().get_success_instance()
+    response.message = '预约成功，请在10分钟之内尽快使用。'
+    return JsonResponse(response.__dict__)
 
 
 @permission_required('appointment.remove_appointment')
@@ -81,8 +83,8 @@ def modify_appointment(request):
 @csrf_exempt
 def findOne_appointment(request, id):
     appointment = get_object_or_404(Appointment, id=id)
-    appointment.start_time = time.mktime(appointment.start_time.timetuple())
-    appointment.end_time = time.mktime(appointment.end_time.timetuple())
+    appointment.start_time = time.mktime(appointment.start_time.timetuple())*1000
+    appointment.end_time = time.mktime(appointment.end_time.timetuple())*1000
     appointment.__dict__.pop('_state')
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
@@ -128,8 +130,8 @@ def findAllOfCondition_appointment(request):
         data_list = []
         for element in data:
             element.__dict__.pop('_state')
-            element.start_time = time.mktime(element.start_time.timetuple())
-            element.end_time = time.mktime(element.end_time.timetuple())
+            element.start_time = time.mktime(element.start_time.timetuple())*1000
+            element.end_time = time.mktime(element.end_time.timetuple())*1000
             data_list.append(element.__dict__)
         response.data = data_list
         return JsonResponse(response.__dict__)
@@ -140,3 +142,18 @@ def findAllOfCondition_appointment(request):
 def view_appointment(request):
     return render(request,
                   'appointment/appointment.html')
+
+
+@permission_required('appointment.cancel_appointment')
+@login_required
+def cancel_appointment(request, id):
+    appointment = get_object_or_404(Appointment, id=id)
+    washmachine = get_object_or_404(WashMachine, machine_id=appointment.machine_id)
+    appointment.end_time=datetime.datetime.now()
+    appointment.state = 'C'
+    washmachine.state = 'F'
+    appointment.save()
+    washmachine.save()
+    response = ResponseBean().get_success_instance()
+    response.message = '撤销成功。'
+    return JsonResponse(response.__dict__)
