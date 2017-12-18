@@ -58,7 +58,30 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
         }
     });
 
-    //报修详情
+        //新建充值
+    $('#recharge').on('click', function () {
+        var rechargeAdd = common.popUp.init({
+            boxUrl: '/money/rechargeForm/',
+            tplType: 'recharge',
+            popType: 'add',
+            success: function (layero, index) {
+                form.on('submit(edit)', function (data) {
+                    axios.post('/money/recharge/', data.field)
+                        .then(function (response) {
+                            common.responseMessage({pg: pg, response: response.data});
+                            rechargeAdd.config.box = -1;
+                            layer.close(index);
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                    return false;
+                });
+            }
+        })
+    });
+
+    //交易详情
     function details(id) {
         common.details.init({
             id: id,

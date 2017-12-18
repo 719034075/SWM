@@ -24,7 +24,8 @@ class Money(models.Model):
             ("modify_money", "Can modify a money"),
             ("findOne_money", "Can find a money"),
             ("findAllOfCondition_money", "Can find all money of condition"),
-            ("view_moneyForm", "Can view the money form")
+            ("view_rechargeForm", "Can view the recharge form"),
+            ("recharge_money", "Can recharge money"),
         )
 
     def __str__(self):

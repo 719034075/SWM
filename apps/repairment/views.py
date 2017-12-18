@@ -152,5 +152,5 @@ def cancel_repairment(request, id):
     repairment.save()
     washmachine.save()
     response = ResponseBean().get_success_instance()
-    response.message = '取消成功。'
+    response.message = '撤销成功。'
     return JsonResponse(response.__dict__)

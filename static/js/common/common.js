@@ -324,6 +324,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'repairment':
                     area = ['600px','300px'];
                     break;
+                 case 'recharge':
+                    area = '600px';
+                    break;
 
             }
             return area;
@@ -341,6 +344,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                     break;
                 case 'repairment':
                     title = '异常';
+                    break;
+                 case 'recharge':
+                    title = '充值';
                     break;
             }
             return title;

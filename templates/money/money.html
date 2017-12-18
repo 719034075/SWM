@@ -4,6 +4,11 @@
 {% block content %}
     <div class="admin-main">
         <blockquote class="layui-elem-quote">
+            {% if perms.money.view_rechargeForm and perms.money.recharge_money %}
+                <a href="javascript:void(0);" class="layui-btn layui-btn-sm" id="recharge">
+                    <i class="fa fa-plus-circle"></i> 充值
+                </a>
+            {% endif %}
             <a href="javascript:void(0);" class="layui-btn layui-btn-sm" id="reload">
                 <i class="fa fa-repeat"></i> 刷新重置
             </a>

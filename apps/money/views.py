@@ -1,3 +1,4 @@
+import decimal
 import time
 from django.contrib.auth.models import User, Group
 from django.db.migrations import state
@@ -58,7 +59,7 @@ def remove_money(request, id):
 def findOne_money(request, id):
     money = get_object_or_404(Money, id=id)
     money.__dict__.pop('_state')
-    money.transaction_time = time.mktime(money.transaction_time.timetuple())
+    money.transaction_time = time.mktime(money.transaction_time.timetuple())*1000
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
     response.data = money.__dict__
@@ -71,7 +72,7 @@ def findOne_money(request, id):
 def findAllOfCondition_money(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
-        data =Money.objects.order_by('-transaction_time')
+        data = Money.objects.order_by('-transaction_time')
         d = json.loads(str(request.body, encoding="utf-8"))
         trading_account = user.username
         if trading_account is not None and Group.objects.get(user=user) == Group.objects.get(name='U'):
@@ -101,7 +102,7 @@ def findAllOfCondition_money(request):
         data_list = []
         for element in data:
             element.__dict__.pop('_state')
-            element.transaction_time = time.mktime(element.transaction_time.timetuple())
+            element.transaction_time = time.mktime(element.transaction_time.timetuple())*1000
             data_list.append(element.__dict__)
         response.data = data_list
         return JsonResponse(response.__dict__)
@@ -113,4 +114,31 @@ def view_money(request):
     return render(request,
                   'money/money.html')
 
+@permission_required('money.view_rechargeForm')
+@login_required
+def view_rechargeForm(request):
+    return render(request,
+                  'money/rechargeForm.html')
 
+@permission_required('money.recharge_money')
+@login_required
+@csrf_exempt
+def recharge_money(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        student = get_object_or_404(StudentInformation, user=user)
+        d = json.loads(str(request.body, encoding="utf-8"))
+        trading_account = user.username
+        trading_amount = decimal.Decimal(d['trading_amount'])
+        student.balance = student.balance + trading_amount
+        balance = student.balance
+        transaction_type = 'R'
+        new_money = Money.objects.create(trading_account=trading_account,
+                                         trading_amount=trading_amount,
+                                         balance=balance,
+                                         transaction_type=transaction_type)
+        student.save()
+        new_money.save()
+        response = ResponseBean().get_success_instance()
+        response.message = '充值成功。'
+        return JsonResponse(response.__dict__)

@@ -106,10 +106,6 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             popType: 'add',
             id: id,
             success: function (layero, index) {
-                // var repairmentmentVue = new Vue({
-                //     el: '#repairment',
-                //     data: {remarks: ''}
-                // });
                 form.render();
                 form.on('submit(edit)', function (data) {
                     data.field.id = id;
