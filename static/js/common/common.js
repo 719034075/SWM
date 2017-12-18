@@ -437,6 +437,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'repairment':
                     tpl = that.detailsTpl.repairmentDetailsTpl;
                     break;
+                case 'money':
+                    tpl = that.detailsTpl.moneyDetailsTpl;
+                    break;
                 default:
                     tpl = '详情模版选择错误';
                     break;
@@ -462,6 +465,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'repairment':
                     title = '报修详情';
                     break;
+                case 'money':
+                    title = '交易详情';
+                    break;
                 default:
                     title = '详情';
                     break;
@@ -484,6 +490,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                     area = '400px';
                     break;
                 case 'repairment':
+                    area = '400px';
+                    break;
+                case 'money':
                     area = '400px';
                     break;
                 default:
@@ -565,6 +574,29 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 , '<%# }%>'
                 , '<%# if(item.state==="C"){ %>'
                 , '已取消'
+                , '<%# }%></div>'
+                , '</div>'].join(''),
+            //交易详情模板
+            moneyDetailsTpl: ['<div class="tplFont" style="margin: 15px;">'
+                , '<%# var item=d.data;%>'
+                , '<%# var transaction_time="-"; %>'
+                , '<%# if(item.transaction_time){transaction_time=layui.common.date.datetimeFormat_3(item.transaction_time);} %>'
+                , '<div>交易用户：<% item.trading_account?item.trading_account:"-" %></div>'
+                , '<div>交易时间：<% transaction_time %></div>'
+                , '<div>交易金额：<% item.trading_amount?item.trading_amount:"-" %></div>'
+                , '<div>交易余额：<% item.balance?item.balance:"-" %></div>'
+                , '<div>交易类型：'
+                , '<%# if(!item.transaction_type){ %>'
+                , '-'
+                , '<%# }%>'
+                , '<%# if(item.transaction_type==="R"){ %>'
+                , '充值'
+                , '<%# }%>'
+                , '<%# if(item.transaction_type==="P"){ %>'
+                , '支付'
+                , '<%# }%>'
+                , '<%# if(item.transaction_type==="B"){ %>'
+                , '返现'
                 , '<%# }%></div>'
                 , '</div>'].join('')
         }

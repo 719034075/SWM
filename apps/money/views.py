@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+import time
+from django.contrib.auth.models import User, Group
 from django.db.migrations import state
 from django.shortcuts import render
 
@@ -57,6 +58,7 @@ def remove_money(request, id):
 def findOne_money(request, id):
     money = get_object_or_404(Money, id=id)
     money.__dict__.pop('_state')
+    money.transaction_time = time.mktime(money.transaction_time.timetuple())
     response = ResponseBean().get_success_instance()
     response.message = '查询成功。'
     response.data = money.__dict__
@@ -69,10 +71,11 @@ def findOne_money(request, id):
 def findAllOfCondition_money(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
+        Money.objects.order_by('-transaction_time')
         data = Money.objects.all()
         d = json.loads(str(request.body, encoding="utf-8"))
         trading_account = user.username
-        if trading_account is not None:
+        if trading_account is not None and Group.objects.get(user=user) == Group.objects.get(name='U'):
             data = data.filter(trading_account=trading_account)
         if 'transaction_type' in d.keys():
             data = data.filter(transaction_type=d['transaction_type'])
@@ -99,6 +102,7 @@ def findAllOfCondition_money(request):
         data_list = []
         for element in data:
             element.__dict__.pop('_state')
+            element.transaction_time = time.mktime(element.transaction_time.timetuple())
             data_list.append(element.__dict__)
         response.data = data_list
         return JsonResponse(response.__dict__)

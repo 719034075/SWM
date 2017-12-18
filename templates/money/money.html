@@ -4,11 +4,6 @@
 {% block content %}
     <div class="admin-main">
         <blockquote class="layui-elem-quote">
-            {% if perms.washmachine.view_washmachineForm and perms.washmachine.add_washmachine %}
-                <a href="javascript:void(0);" class="layui-btn layui-btn-sm" id="add">
-                    <i class="fa fa-plus-circle"></i> 新建
-                </a>
-            {% endif %}
             <a href="javascript:void(0);" class="layui-btn layui-btn-sm" id="reload">
                 <i class="fa fa-repeat"></i> 刷新重置
             </a>
@@ -19,9 +14,11 @@
                 <tr>
                     <th style="width: 30px;"><input type="checkbox" lay-filter="allselector" lay-skin="primary"
                                                     title=""></th>
-                    <th>洗衣机编号</th>
-                    <th>寝室楼号</th>
-                    <th>运行状态</th>
+                    <th>交易用户</th>
+                    <th>交易时间</th>
+                    <th>交易金额</th>
+                    <th>交易余额</th>
+                    <th>交易类型</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -36,39 +33,35 @@
     </div>
 {% endblock %}
 {% block templates_script %}
-    <script src="{% static 'js/washmachine/washmachine.js' %}"></script>
+    <script src="{% static 'js/money/money.js' %}"></script>
     <script type="text/html" id="tpl">
         <%# layui.each(d.data, function(index, item){ %>
+        <%# var transaction_time="-"; %>
+        <%# if(item.transaction_time){transaction_time=layui.common.date.datetimeFormat_3(item.transaction_time);} %>
         <tr data-id="<% item.id %>">
             <td><input type="checkbox" lay-skin="primary" title=""></td>
-            <td><% item.machine_id?item.machine_id:"-" %></td>
-            <td><% item.dormitory_building_number?item.dormitory_building_number:"-" %></td>
+            <td><% item.trading_account?item.trading_account:"-" %></td>
+            <td><% transaction_time %></td>
+            <td><% item.trading_amount?item.trading_amount:"-" %></td>
+            <td><% item.balance?item.balance:"-" %></td>
             <td>
-                <%# if(!item.state){ %>
+                <%# if(!item.transaction_type){ %>
                 -
                 <%# }%>
-                <%# if(item.state==='F'){ %>
-                空闲
+                <%# if(item.transaction_type==='R'){ %>
+                充值
                 <%# }%>
-                <%# if(item.state==='W'){ %>
-                工作中
+                <%# if(item.transaction_type==='P'){ %>
+                支付
                 <%# }%>
-                <%# if(item.state==='B'){ %>
-                故障
-                <%# }%>
-                <%# if(item.state==='D'){ %>
-                待清洁
+                <%# if(item.transaction_type==='B'){ %>
+                返现
                 <%# }%>
             </td>
             <td>
-                {% if perms.washmachine.findOne_washmachine %}
-                    <a href="javascript:void(0);" data-opt="details" class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
-                {% endif %}
-                {% if perms.washmachine.view_washmachineForm and perms.washmachine.modify_washmachine %}
-                    <a href="javascript:void(0);" data-opt="edit" class="layui-btn layui-btn-xs">编辑</a>
-                {% endif %}
-                {% if perms.washmachine.remove_washmachine %}
-                    <a href="javascript:void(0);" data-opt="delete" class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
+                {% if perms.money.findOne_money %}
+                    <a href="javascript:void(0);" data-opt="details"
+                       class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}
             </td>
         </tr>
