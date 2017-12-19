@@ -71,6 +71,18 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 $that.children('td:last-child').children('a[data-opt=addRepairment]').on('click', function () {
                     addRepairment($that.data('id'));
                 });
+                //绑定所有使用按钮事件
+                $that.children('td:last-child').children('a[data-opt=use]').on('click', function () {
+                    use($that.data('id'));
+                });
+                if ($that.data('endtime')) {
+                    var option = {};
+                    option.element = document.getElementById('T' + $that.data('id'));
+                    option.start_time = new Date();
+                    option.end_time = new Date($that.data('endtime'));
+                    option.pg=pg;
+                    common.timeCutDown(option)
+                }
             });
         }
     });
@@ -103,7 +115,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
     });
 
     //预约
- function appointment(id) {
+    function appointment(id) {
         var confirmindex = layer.confirm('确定预约该台洗衣机吗？', {
             icon: 7,
             btn: ['确定', '取消']
@@ -195,6 +207,26 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             layer.close(confirmindex);
             var loadindex = layer.load(2);
             axios.get('/washmachine/remove/' + id + '/')
+                .then(function (response) {
+                    layer.close(loadindex);
+                    common.responseMessage({pg: pg, response: response.data});
+                })
+                .catch(function (error) {
+                    console.error(error)
+                });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    }
+
+    //使用一台洗衣机
+    function use(id) {
+        var confirmindex = layer.confirm('确定使用该台洗衣机吗？', {
+            icon: 7,
+            btn: ['确定', '取消']
+        }, function () {
+            layer.close(confirmindex);
+            var loadindex = layer.load(2);
+            axios.get('/washmachine/use/' + id + '/')
                 .then(function (response) {
                     layer.close(loadindex);
                     common.responseMessage({pg: pg, response: response.data});

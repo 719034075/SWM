@@ -33,7 +33,7 @@ def add_appointment(request, id):
     machine_id = washmachine.machine_id
     account = user.username
     start_time = datetime.datetime.now()
-    end_time = start_time + datetime.timedelta(seconds=+10)
+    end_time = start_time + datetime.timedelta(minutes=+1)
     washmachine.state = 'A'
     state = 'A'
     new_appointment = Appointment.objects.create(machine_id=machine_id,

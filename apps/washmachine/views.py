@@ -1,5 +1,6 @@
 import decimal
 import json
+import time
 
 import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -115,6 +116,7 @@ def findAllOfCondition_washmachine(request):
         response = ResponseBean().get_success_instance()
         response.message = "查询成功。"
         response.total = totol
+        response.used = False
         data_list = []
         for element in data:
             element.is_me = False
@@ -124,9 +126,15 @@ def findAllOfCondition_washmachine(request):
                 element.end_time = appointment.end_time
                 if appointment.account == user.username:
                     element.is_me = True
+                    response.used = True
             elif element.state == 'W':
                 if element.account == user.username:
                     element.is_me = True
+                    response.used = True
+            if element.start_time:
+                element.start_time = time.mktime(element.start_time.timetuple()) * 1000
+            if element.end_time:
+                element.end_time = time.mktime(element.end_time.timetuple()) * 1000
             element.__dict__.pop('_state')
             data_list.append(element.__dict__)
         response.data = data_list

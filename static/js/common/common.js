@@ -190,6 +190,26 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
         }
     };
 
+    Common.prototype.timeCutDown = function (option) {
+        CountDown.openTimeCountByStartAndEndDate({
+            Ele: option.element,
+            StartDate: option.start_time,
+            EndDate: option.end_time,
+            Sign: 'flypie',
+            Divider: ':',
+            EndFunc: function () {
+                console.log(option.element);s
+                option.pg.get({});
+            },
+            // additionToggle: {
+            //     seconds: 10,
+            //     callback: function () {
+            //         alert('soon');
+            //     }
+            // }
+        });
+    };
+
     Common.prototype.stringToNull = function (value) {
         return value === "null" ? null : value;
     };

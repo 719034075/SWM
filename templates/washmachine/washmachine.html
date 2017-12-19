@@ -39,7 +39,7 @@
     <script src="{% static 'js/washmachine/washmachine.js' %}"></script>
     <script type="text/html" id="tpl">
         <%# layui.each(d.data, function(index, item){ %>
-        <tr data-id="<% item.id %>">
+        <tr data-id="<% item.id %>" data-endtime="<% item.end_time %>">
             <td><input type="checkbox" lay-skin="primary" title=""></td>
             <td><% item.machine_id?item.machine_id:"-" %></td>
             <td><% item.dormitory_building_number?item.dormitory_building_number:"-" %></td>
@@ -51,10 +51,10 @@
                 空闲
                 <%# }%>
                 <%# if(item.state==='W'){ %>
-                工作中
+                工作中 <span id="T<% item.id %>"></span>
                 <%# }%>
                 <%# if(item.state==='A'){ %>
-                预约中
+                预约中 <span id="T<% item.id %>"></span>
                 <%# }%>
                 <%# if(item.state==='B'){ %>
                 <span style="color:red;">故障</span>
@@ -69,9 +69,15 @@
                        class="layui-btn layui-btn-normal layui-btn-xs">详情</a>
                 {% endif %}
                 {% if perms.appointment.add_appointment %}
-                    <%# if(item.state!=='B'&&item.state!=='D'&&item.state!=='A'){ %>
+                    <%# if(item.state==='F'&&d.used===false){ %>
                     <a href="javascript:void(0);" data-opt="appointment"
                        class="layui-btn layui-btn-xs">预约</a>
+                    <%# }%>
+                {% endif %}
+                {% if perms.washmachine.use_washmachine %}
+                    <%# if(item.state==='A'&&item.is_me===true){ %>
+                    <a href="javascript:void(0);" data-opt="use"
+                       class="layui-btn layui-btn-xs">使用</a>
                     <%# }%>
                 {% endif %}
                 {% if perms.repairment.view_repairmentForm and perms.repairment.add_repairment %}
