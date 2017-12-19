@@ -198,7 +198,6 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
             Sign: 'flypie',
             Divider: ':',
             EndFunc: function () {
-                console.log(option.element);
                 option.pg.get({});
             },
             // additionToggle: {

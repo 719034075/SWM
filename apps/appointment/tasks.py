@@ -29,5 +29,8 @@ def washmachine_task():
     print("start washmachine_task")
     for element in data:
         if element.end_time <= now:
+            element.account = None
+            element.start_time = None
+            element.end_time = None
             element.state = 'F'
             element.save()

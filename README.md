@@ -1,6 +1,10 @@
 # SWM
 a django web about school washing machine.
 
+## 2017-12-19
+
++ 用户端基本完成
+
 ## 2017-12-18
 
 + 维修端基本完成

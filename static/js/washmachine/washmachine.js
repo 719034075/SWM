@@ -220,7 +220,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
 
     //使用一台洗衣机
     function use(id) {
-        var confirmindex = layer.confirm('确定使用该台洗衣机吗？', {
+        var confirmindex = layer.confirm('确定使用该台洗衣机吗？费用5元', {
             icon: 7,
             btn: ['确定', '取消']
         }, function () {
