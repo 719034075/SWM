@@ -322,9 +322,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                     area = '600px';
                     break;
                 case 'repairment':
-                    area = ['600px','300px'];
+                    area = ['600px', '300px'];
                     break;
-                 case 'recharge':
+                case 'recharge':
                     area = '600px';
                     break;
 
@@ -345,7 +345,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 case 'repairment':
                     title = '异常';
                     break;
-                 case 'recharge':
+                case 'recharge':
                     title = '充值';
                     break;
             }
@@ -557,6 +557,9 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
                 , '<%# }%>'
                 , '<%# if(item.state==="A"){ %>'
                 , '预约中'
+                , '<%# }%>'
+                , '<%# if(item.state==="O"){ %>'
+                , '已过期'
                 , '<%# }%>'
                 , '<%# if(item.state==="E"){ %>'
                 , '已完成'

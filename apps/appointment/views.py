@@ -1,5 +1,7 @@
 import datetime
 import time
+
+from apscheduler.schedulers.background import BackgroundScheduler
 from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 
@@ -16,6 +18,7 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
 from apps.appointment.models import Appointment
+from apps.appointment.tasks import appointment_task
 from apps.washmachine.models import WashMachine
 from utils.ResponseBean import ResponseBean
 
@@ -24,12 +27,13 @@ from utils.ResponseBean import ResponseBean
 @login_required
 @csrf_exempt
 def add_appointment(request, id):
+    scheduler = BackgroundScheduler()
     washmachine = get_object_or_404(WashMachine, id=id)
     user = User.objects.get(id=request.user.id)
     machine_id = washmachine.machine_id
     account = user.username
     start_time = datetime.datetime.now()
-    end_time = start_time + datetime.timedelta(minutes=+10)
+    end_time = start_time + datetime.timedelta(seconds=+10)
     washmachine.state = 'A'
     state = 'A'
     new_appointment = Appointment.objects.create(machine_id=machine_id,
@@ -39,6 +43,8 @@ def add_appointment(request, id):
                                                  state=state)
     washmachine.save()
     new_appointment.save()
+    scheduler.add_job(appointment_task, 'date', run_date=end_time)
+    scheduler.start()
     response = ResponseBean().get_success_instance()
     response.message = '预约成功，请在10分钟之内尽快使用。'
     return JsonResponse(response.__dict__)

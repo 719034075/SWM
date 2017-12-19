@@ -11,6 +11,5 @@ urlpatterns = [
     url(r'^modify/$', views.modify_appointment, name='modify_appointment'),
     url(r'^findOne/(?P<id>\d+)/$', views.findOne_appointment, name='findOne_appointment'),
     url(r'^findAllOfCondition/$', views.findAllOfCondition_appointment, name='findAllOfCondition_appointment'),
-    url(r'^cancel/(?P<id>\d+)/$', views.cancel_appointment, name='cancel_appointment'),
 
 ]
