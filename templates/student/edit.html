@@ -56,12 +56,6 @@
                     {{ student_information_form.balance }}
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">信用分：</label>
-                <div class="layui-input-inline">
-                    {{ student_information_form.credit }}
-                </div>
-            </div>
             {% csrf_token %}
             <div class="layui-form-item">
                 <a name="register" href="{% url "view_student_dashboard" %}"

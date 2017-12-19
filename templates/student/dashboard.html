@@ -2,7 +2,14 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-student dashboard
+    <div class="layui-carousel" id="student_dashboard">
+        <div carousel-item>
+            <img src="{% static 'images/carousel1.jpg' %}">
+            <img src="{% static 'images/carousel2.jpg' %}">
+            <img src="{% static 'images/carousel3.jpg' %}">
+        </div>
+    </div>
 {% endblock %}
 {% block templates_script %}
+    <script src="{% static 'js/student/dashboard.js' %}"></script>
 {% endblock %}
