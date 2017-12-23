@@ -75,7 +75,7 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
                 $that.children('td:last-child').children('a[data-opt=use]').on('click', function () {
                     use($that.data('id'));
                 });
-                if ($that.data('endtime')) {
+                if ($that.data('endtime')&&new Date($that.data('endtime'))>new Date()) {
                     var option = {};
                     option.element = document.getElementById('T' + $that.data('id'));
                     option.start_time = new Date();
@@ -142,7 +142,6 @@ layui.use(['layer', 'element', 'form', 'laytpl', 'paging', 'common'], function (
             popType: 'add',
             id: id,
             success: function (layero, index) {
-                form.render();
                 form.on('submit(edit)', function (data) {
                     data.field.id = id;
                     axios.post('/repairment/add/', data.field)
